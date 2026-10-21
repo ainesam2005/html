@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HTML Practice Workbook</title>
+<style>
+:root{--bg:#fff8ef;--card:#fff;--ink:#231a2e;--mut:#6b6477;--acc:#e8590c;--acc2:#4c3bcf;--ok:#1f8a4c;--bad:#c92a2a;--code:#1d1730;--line:#eadfce;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#16121f;--card:#211b30;--ink:#f3eefc;--mut:#a59db8;--acc:#ff8a4c;--acc2:#9d8cff;--ok:#4cd68a;--bad:#ff7a7a;--code:#0e0b16;--line:#33294a}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#16121f;--card:#211b30;--ink:#f3eefc;--mut:#a59db8;--acc:#ff8a4c;--acc2:#9d8cff;--ok:#4cd68a;--bad:#ff7a7a;--code:#0e0b16;--line:#33294a}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Segoe UI",system-ui,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:20px 16px 60px}
+header{background:linear-gradient(135deg,var(--acc2),var(--acc));color:#fff;border-radius:20px;padding:24px 22px;margin-bottom:16px}
+header small{letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:700}
+h1{margin:4px 0 6px;font:800 clamp(26px,5vw,38px)/1.1 Georgia,serif}
+header p{margin:0;opacity:.92}
+.bar{height:10px;background:rgba(255,255,255,.3);border-radius:9px;margin-top:14px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:#fff;border-radius:9px;transition:width .5s}
+.pills{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 12px}
+.pills button{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 14px;font:600 14px inherit;cursor:pointer}
+.pills button.on{background:var(--acc2);color:#fff;border-color:var(--acc2)}
+.pills button.done::after{content:" ✓";color:var(--ok);font-weight:800}
+.pills button.on.done::after{color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:14px}
+.card h2{margin:0 0 6px;font:700 22px Georgia,serif}
+.tag{color:var(--acc);font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+code{font-family:Consolas,monospace;background:rgba(124,92,255,.14);padding:1px 6px;border-radius:6px;font-size:.92em}
+textarea{width:100%;min-height:150px;resize:vertical;background:var(--code);color:#e9e3ff;border:2px solid transparent;border-radius:12px;padding:12px;font:14px/1.5 Consolas,monospace;tab-size:2}
+textarea:focus{outline:none;border-color:var(--acc2)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.btns button,.opt{border:0;border-radius:11px;padding:10px 16px;font:700 15px inherit;cursor:pointer}
+.go{background:var(--acc);color:#fff}.ghost{background:transparent;border:1px solid var(--line)!important;color:var(--ink)}
+.opt{display:block;width:100%;text-align:left;background:var(--bg);border:1px solid var(--line);color:var(--ink);margin:8px 0;font-weight:600}
+.opt.right{border-color:var(--ok);background:rgba(31,138,76,.15)}.opt.wrong{border-color:var(--bad);background:rgba(201,42,42,.13)}
+.res{list-style:none;padding:0;margin:10px 0}
+.res li{padding:7px 10px;border-radius:9px;margin:5px 0;font-size:15px}
+.res .y{background:rgba(31,138,76,.14)}.res .n{background:rgba(201,42,42,.12)}
+.msg{font-weight:700;margin:8px 0}.hint{color:var(--mut);font-size:14px}
+.ans{white-space:pre-wrap;background:var(--code);color:#e9e3ff;border-radius:12px;padding:12px;font:13px/1.5 Consolas,monospace;margin-top:8px}
+iframe{width:100%;height:190px;border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:10px}
+.foot{text-align:center;color:var(--mut);font-size:13px;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><small>Learn,Practise,Recall, Build</small><h1>HTML Practice Workbook Prepared by SAM </h1><p>Type real HTML. We mark every tag, step by step.</p><div class="bar"><i id="pb"></i></div><p id="pt" style="margin-top:8px;font-size:14px"></p></header>
+<div class="pills" id="pills"></div>
+<div id="main"></div>
+<div class="foot">Progress saves in this browser. <a href="#" id="reset" style="color:var(--acc2)">Reset progress</a></div>
+</div>
+<script>
+const has=(d,s)=>!!d.querySelector(s), n=(d,s)=>d.querySelectorAll(s).length, tx=(d,s)=>(d.querySelector(s)?.textContent||'').trim();
+const at=(d,s,a,re)=>re.test(d.querySelector(s)?.getAttribute(a)||'');
+const L=[
+{t:'Foundations',i:'Every page starts with `<!DOCTYPE html>`, then `<html>` containing `<head>` (page info, `<title>`) and `<body>` (what people see). Headings run from `<h1>` (largest) to `<h6>`.',s:[
+ {q:'Which element makes the largest-level heading?',o:['<heading>','<h1>','<head>','<title>'],c:1,w:'`<h1>` is the largest heading. `<head>` holds page information, not visible content.'},
+ {p:'Write a complete HTML document with: an h1 saying “My First Website”, a paragraph introducing yourself, and a link to https://www.google.com',h:'Start with <!DOCTYPE html>, then html, head (with title) and body.',a:'<!DOCTYPE html>\n<html>\n<head>\n  <title>My First Website</title>\n</head>\n<body>\n  <h1>My First Website</h1>\n  <p>Hi, I am Sam.</p>\n  <a href="https://www.google.com">Google</a>\n</body>\n</html>',k:[['Starts with <!DOCTYPE html>',(d,r)=>/^\s*<!doctype html>/i.test(r)],['Has html, head and body',d=>/<html/i.test(d.documentElement.outerHTML)&&has(d,'head')&&has(d,'body')],['Has a <title>',d=>tx(d,'title')!==''],['h1 says My First Website',d=>/my first website/i.test(tx(d,'h1'))],['Has a paragraph',d=>tx(d,'p')!==''],['Link points to https://www.google.com',d=>at(d,'a','href',/^https:\/\/www\.google\.com\/?$/)]]}]},
+{t:'Text',i:'Paragraphs use `<p>`. `<strong>` marks important text, `<em>` adds emphasis, and `<br>` is a line break (it has no closing tag).',s:[
+ {q:'Which tag marks text as important?',o:['<b>','<strong>','<big>','<mark>'],c:1,w:'`<strong>` means importance; browsers show it bold.'},
+ {p:'Write an h2 “Hobbies”, then a paragraph containing the word important inside strong, then another paragraph with a <br> inside it.',h:'<br> needs no closing tag.',a:'<h2>Hobbies</h2>\n<p>This is <strong>important</strong>.</p>\n<p>Line one<br>Line two</p>',k:[['Has an h2 “Hobbies”',d=>/hobbies/i.test(tx(d,'h2'))],['Has strong text',d=>tx(d,'strong')!==''],['Has a <br>',d=>has(d,'p br')],['Has two paragraphs',d=>n(d,'p')>=2]]}]},
+{t:'Links',i:'The anchor `<a>` makes links. `href` is the destination. `target="_blank"` opens a new tab. Link to a spot on the same page with `href="#id"`.',s:[
+ {p:'Make a link with the text Visit that goes to https://example.com and opens in a new tab.',h:'Use the target attribute.',a:'<a href="https://example.com" target="_blank">Visit</a>',k:[['Is an <a> with text Visit',d=>/^visit$/i.test(tx(d,'a'))],['href is https://example.com',d=>at(d,'a','href',/^https:\/\/example\.com\/?$/)],['target is _blank',d=>at(d,'a','target',/^_blank$/)]]},
+ {p:'Make a link to #contact, and a heading with id="contact" it jumps to.',h:'The id value must match the part after #.',a:'<a href="#contact">Contact</a>\n<h2 id="contact">Contact us</h2>',k:[['Link with href="#contact"',d=>at(d,'a','href',/^#contact$/)],['Element with id="contact"',d=>has(d,'#contact')]]}]},
+{t:'Images',i:'`<img>` shows pictures. `src` is the file path, `alt` describes the image for screen readers and shows if the image fails. It has no closing tag.',s:[
+ {q:'Why should every image have an alt attribute?',o:['It makes it load faster','It describes the image to screen readers and when it fails to load','It changes the size','It is required for colour'],c:1,w:'Alt text is a text alternative. It is key for accessibility.'},
+ {p:'Add the image photo.jpg with alt text “My portrait” and a width of 200.',h:'<img src="..." alt="..." width="...">',a:'<img src="photo.jpg" alt="My portrait" width="200">',k:[['Has an <img>',d=>has(d,'img')],['src is photo.jpg',d=>at(d,'img','src',/^photo\.jpg$/)],['alt is “My portrait”',d=>at(d,'img','alt',/^my portrait$/i)],['width is 200',d=>at(d,'img','width',/^200$/)]]}]},
+{t:'Lists',i:'`<ul>` is a bulleted list, `<ol>` a numbered one. Each item goes in `<li>`.',s:[
+ {q:'Which list is best for step-by-step instructions?',o:['<ul>','<ol>','<dl>','<li>'],c:1,w:'`<ol>` numbers items, so order is clear.'},
+ {p:'Write an unordered list of three hobbies.',h:'ul wraps three li items.',a:'<ul>\n  <li>Reading</li>\n  <li>Football</li>\n  <li>Coding</li>\n</ul>',k:[['Has a <ul>',d=>has(d,'ul')],['Has 3 <li> inside it',d=>n(d,'ul > li')===3],['Items have text',d=>[...d.querySelectorAll('li')].every(x=>x.textContent.trim())]]}]},
+{t:'Tables',i:'`<table>` holds rows `<tr>`. Header cells use `<th>`, data cells `<td>`.',s:[
+ {p:'Build a table with 3 rows and 2 columns: a header row (th: Name, Age) and two data rows.',h:'Row 1 uses th, rows 2 and 3 use td.',a:'<table>\n  <tr><th>Name</th><th>Age</th></tr>\n  <tr><td>Amina</td><td>19</td></tr>\n  <tr><td>Ali</td><td>20</td></tr>\n</table>',k:[['Has a <table>',d=>has(d,'table')],['2 header cells (th)',d=>n(d,'th')===2],['3 rows',d=>n(d,'tr')===3],['4 data cells (td)',d=>n(d,'td')===4]]}]},
+{t:'Forms',i:'`<form>` collects input. Each `<input>` needs a `<label>`; connect them with `for` and `id`. `type` sets the kind: text, email, and more.',s:[
+ {p:'Make a form with a labelled text input (name), a labelled email input, and a submit button.',h:'label for="x" matches input id="x".',a:'<form>\n  <label for="n">Name</label>\n  <input type="text" id="n" name="name">\n  <label for="e">Email</label>\n  <input type="email" id="e" name="email">\n  <button type="submit">Send</button>\n</form>',k:[['Has a <form>',d=>has(d,'form')],['Has a text input',d=>has(d,'input[type=text]')],['Has an email input',d=>has(d,'input[type=email]')],['Labels linked to inputs (for = id)',d=>{const l=[...d.querySelectorAll('label[for]')];return l.length>=2&&l.every(x=>d.getElementById(x.getAttribute('for')))}],['Has a submit button',d=>has(d,'button[type=submit], input[type=submit], form button:not([type])')]]}]},
+{t:'Semantic HTML',i:'Semantic tags describe a page’s parts: `<header>`, `<nav>`, `<main>`, `<footer>`. They help screen readers, search engines and other developers.',s:[
+ {p:'Build a page skeleton using header, nav (with one link), main (with an h1) and footer.',h:'Place them inside body.',a:'<header>\n  <nav><a href="#">Home</a></nav>\n</header>\n<main>\n  <h1>Welcome</h1>\n</main>\n<footer>© 2026</footer>',k:[['Has <header>',d=>has(d,'header')],['Has <nav> with a link',d=>has(d,'nav a')],['Has <main> with an h1',d=>has(d,'main h1')],['Has <footer>',d=>has(d,'footer')]]}]},
+{t:'Debugging',i:'Browsers forgive many mistakes, which hides them. Read each broken snippet carefully and fix every error.',s:[
+ {p:'Fix this code so the heading and paragraph are each closed correctly.',x:'<h1>Welcome\n<p>I am learning HTML</h1>',h:'Close h1 before the paragraph; close p with </p>.',a:'<h1>Welcome</h1>\n<p>I am learning HTML</p>',k:[['h1 closed correctly',(d,r)=>/<h1>\s*Welcome\s*<\/h1>/i.test(r)],['p closed with </p>',(d,r)=>/<p>[^<]*<\/p>/i.test(r)]]},
+ {p:'Fix the image: the tag name is wrong and alt text is missing.',x:'<image src="cat.jpg">',h:'The correct tag is img.',a:'<img src="cat.jpg" alt="A cat">',k:[['Uses <img>',(d,r)=>/<img/i.test(r)&&!/<image/i.test(r)],['Keeps src="cat.jpg"',d=>at(d,'img','src',/cat\.jpg/)],['Has non-empty alt',d=>at(d,'img','alt',/\S/)]]},
+ {p:'Fix the list: items must be li elements.',x:'<ul>\n  <p>Apples</p>\n  <p>Mangoes</p>\n</ul>',h:'Replace each p with li.',a:'<ul>\n  <li>Apples</li>\n  <li>Mangoes</li>\n</ul>',k:[['2 <li> items',d=>n(d,'ul > li')===2],['No <p> left in the list',d=>!has(d,'ul p')],['Text kept (Apples, Mangoes)',d=>/apples/i.test(tx(d,'ul'))&&/mangoes/i.test(tx(d,'ul'))]]}]},
+{t:'Final Project',i:'Put it all together. Build a complete student profile page. Every check must pass.',s:[
+ {p:'Create a student profile page with: a title, header, main with an h1, a photo (img with alt), a list of three hobbies, a contact form (labelled name and email, submit button), and a footer.',h:'Combine your earlier answers into one full document.',a:'<!DOCTYPE html>\n<html lang="en">\n<head>\n  <title>My Profile</title>\n</head>\n<body>\n  <header><h1>Amina’s Profile</h1></header>\n  <main>\n    <img src="me.jpg" alt="Amina smiling">\n    <h2>Hobbies</h2>\n    <ul><li>Reading</li><li>Football</li><li>Coding</li></ul>\n    <form>\n      <label for="n">Name</label>\n      <input type="text" id="n">\n      <label for="e">Email</label>\n      <input type="email" id="e">\n      <button type="submit">Send</button>\n    </form>\n  </main>\n  <footer>© 2026</footer>\n</body>\n</html>',k:[['Starts with <!DOCTYPE html>',(d,r)=>/^\s*<!doctype html>/i.test(r)],['Has a <title>',d=>tx(d,'title')!==''],['Has header, main and footer',d=>has(d,'header')&&has(d,'main')&&has(d,'footer')],['Has an h1',d=>tx(d,'h1')!==''],['Photo with alt text',d=>has(d,'img[alt]')&&at(d,'img','alt',/\S/)],['List of exactly 3 hobbies',d=>n(d,'ul > li')===3||n(d,'ol > li')===3],['Form with 2 labelled inputs',d=>{const l=[...d.querySelectorAll('label[for]')];return l.length>=2&&l.every(x=>d.getElementById(x.getAttribute('for')))}],['Form has a submit button',d=>has(d,'form button, form input[type=submit]')]]}]}
+];
+let P={};try{P=JSON.parse(localStorage.getItem('htmlwb')||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem('htmlwb',JSON.stringify(P))}catch(e){}};
+let li=0,si=0,tries=0;
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const f=s=>esc(s).replace(/`([^`]+)`/g,'<code>$1</code>');
+const key=(l,s)=>l+'.'+s, total=L.reduce((a,l)=>a+l.s.length,0);
+function prog(){const d=Object.keys(P).length;document.getElementById('pb').style.width=(d/total*100)+'%';document.getElementById('pt').textContent=d+' of '+total+' steps complete'}
+function pills(){document.getElementById('pills').innerHTML=L.map((l,i)=>`<button class="${i===li?'on ':''}${l.s.every((_,j)=>P[key(i,j)])?'done':''}" data-i="${i}">${i+1}. ${l.t}</button>`).join('');
+ document.querySelectorAll('#pills button').forEach(b=>b.onclick=()=>{li=+b.dataset.i;si=0;draw()})}
+function draw(){tries=0;pills();prog();const l=L[li],s=l.s[si],m=document.getElementById('main');
+ let h=`<div class="card"><div class="tag">Lesson ${li+1} of ${L.length}</div><h2>${l.t}</h2><p>${f(l.i)}</p></div><div class="card"><div class="tag">Step ${si+1} of ${l.s.length}${P[key(li,si)]?' · ✓ complete':''}</div>`;
+ if(s.q){h+=`<p><b>${f(s.q)}</b></p>`+s.o.map((o,i)=>`<button class="opt" data-i="${i}">${esc(o)}</button>`).join('')+`<div class="msg" id="msg"></div>`}
+ else{h+=`<p><b>${f(s.p)}</b></p><textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="Type your HTML here…">${esc(s.x||'')}</textarea><div class="btns"><button class="go" id="chk">Check my code</button><button class="ghost" id="hint">Hint</button></div><div class="msg" id="msg"></div><ul class="res" id="res"></ul><div id="ex"></div><iframe sandbox title="Preview" id="pv"></iframe>`}
+ h+=`<div class="btns"><button class="ghost" id="prev">← Back</button><button class="go" id="next" ${P[key(li,si)]?'':'style="opacity:.5"'}>Next →</button></div></div>`;
+ m.innerHTML=h;
+ document.getElementById('next').onclick=next;document.getElementById('prev').onclick=prev;
+ if(s.q)document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const ok=+b.dataset.i===s.c;b.classList.add(ok?'right':'wrong');if(ok){pass();msg('✓ Correct! '+s.w,1)}else msg('✗ Not quite. Try another option.',0)});
+ else{const c=document.getElementById('code');c.onkeydown=e=>{if(e.key==='Tab'){e.preventDefault();const p=c.selectionStart;c.setRangeText('  ',p,c.selectionEnd,'end')}};
+  c.oninput=()=>document.getElementById('pv').srcdoc=c.value;c.oninput();
+  document.getElementById('chk').onclick=check;document.getElementById('hint').onclick=()=>msg('Hint: '+s.h,2)}}
+function msg(t,ok){const e=document.getElementById('msg');e.textContent=t;e.style.color=ok===1?'var(--ok)':ok===0?'var(--bad)':'var(--mut)'}
+function pass(){P[key(li,si)]=1;save();prog();pills();document.getElementById('next').style.opacity=1}
+function check(){const s=L[li].s[si],r=document.getElementById('code').value;
+ if(!r.trim()){msg('Type some HTML first.',0);return}
+ const d=new DOMParser().parseFromString(r,'text/html');
+ const out=s.k.map(([lab,fn])=>{let ok=false;try{ok=!!fn(d,r)}catch(e){}return [lab,ok]});
+ document.getElementById('res').innerHTML=out.map(([l,ok])=>`<li class="${ok?'y':'n'}">${ok?'✓':'✗'} ${esc(l)}</li>`).join('');
+ const got=out.filter(o=>o[1]).length;
+ if(got===out.length){msg('🎉 Perfect! '+got+'/'+got+' checks passed.',1);pass()}
+ else{tries++;msg(got+'/'+out.length+' checks passed. Fix the ✗ lines and check again.',0);
+  if(tries>=2)document.getElementById('ex').innerHTML='<button class="ghost" id="sa" style="border:1px solid var(--line);border-radius:11px;padding:8px 14px;color:var(--ink);background:none;cursor:pointer">Show a sample answer</button>',document.getElementById('sa').onclick=()=>document.getElementById('ex').innerHTML='<div class="ans">'+esc(s.a)+'</div>'}}
+function next(){if(si<L[li].s.length-1)si++;else if(li<L.length-1){li++;si=0}draw();scrollTo(0,0)}
+function prev(){if(si>0)si--;else if(li>0){li--;si=L[li].s.length-1}draw();scrollTo(0,0)}
+document.getElementById('reset').onclick=e=>{e.preventDefault();P={};save();li=0;si=0;draw()};
+draw();
+</script>
+</body>
+</html>
