@@ -1,1353 +1,557 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#172554">
+<meta name="theme-color" content="#0b0b0c">
 <meta name="description" content="An interactive HTML practice workbook for learning, writing, debugging and mastering HTML.">
 <title>HTML Practice Workbook | SAM</title>
-
+<link rel="icon" href="1.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  color-scheme: light;
-  --bg: #f4f6fb;
-  --surface: #ffffff;
-  --surface-2: #f0f3fa;
-  --ink: #18233b;
-  --muted: #68758d;
-  --primary: #3549c9;
-  --primary-dark: #24369f;
-  --accent: #f07836;
-  --green: #16834a;
-  --red: #c52d3a;
-  --border: #e0e6f0;
-  --code: #111827;
-  --code-text: #e5e7eb;
-  --shadow: 0 10px 35px rgba(31, 45, 90, .06);
-}
-
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #101522;
-  --surface: #192133;
-  --surface-2: #222d43;
-  --ink: #f0f4ff;
-  --muted: #a5b0c7;
-  --primary: #8996ff;
-  --primary-dark: #6876ef;
-  --accent: #ff9b60;
-  --green: #5cdb97;
-  --red: #ff858c;
-  --border: #303c52;
-  --code: #0b1020;
-  --code-text: #e5e7eb;
-  --shadow: 0 10px 35px rgba(0, 0, 0, .14);
-}
-
-* { box-sizing: border-box; }
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 20px;
-}
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font: 15px/1.65 "Segoe UI", system-ui, -apple-system, sans-serif;
-}
-
-button, textarea { font: inherit; }
-button { -webkit-tap-highlight-color: transparent; }
-button:focus-visible, textarea:focus-visible, a:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 3px;
-}
-
-button { cursor: pointer; }
-button:disabled { opacity: .45; cursor: not-allowed; }
-
-a { color: var(--primary); }
-img, video { max-width: 100%; }
-
-.topbar {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-}
-
-.topbar-inner {
-  max-width: 1180px;
-  margin: auto;
-  padding: 12px 22px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-
-.brand-logo {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-  border-radius: 12px;
-  background: #fff;
-  border: 1px solid var(--border);
-  padding: 3px;
-  flex-shrink: 0;
-}
-
-.brand-name { font-weight: 800; line-height: 1.3; }
-.brand-sub { color: var(--muted); font-size: 12px; }
-
-.top-actions { display: flex; gap: 8px; align-items: center; }
-
-.icon-btn {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--ink);
-  padding: 9px 12px;
-  border-radius: 10px;
-  font-weight: 700;
-}
-
-.wrap {
-  max-width: 1180px;
-  margin: auto;
-  padding: 26px 22px 60px;
-}
-
-.hero {
-  position: relative;
-  overflow: hidden;
-  padding: clamp(24px, 5vw, 48px);
-  color: white;
-  background: #172554;
-  border-radius: 24px;
-  margin-bottom: 22px;
-  box-shadow: var(--shadow);
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  width: 290px;
-  height: 290px;
-  border: 48px solid rgba(255,255,255,.055);
-  border-radius: 50%;
-  right: -90px;
-  top: -130px;
-  pointer-events: none;
-}
-
-.hero-content { position: relative; z-index: 1; }
-
-.eyebrow {
-  text-transform: uppercase;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: .17em;
-  opacity: .85;
-}
-
-.hero h1 {
-  font: 800 clamp(30px, 5vw, 48px)/1.13 Georgia, serif;
-  letter-spacing: -.025em;
-  max-width: 700px;
-  margin: 12px 0;
-}
-
-.hero p {
-  max-width: 630px;
-  color: #e0e7ff;
-  margin: 0;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 22px;
-}
-
-.btn {
-  border: 1px solid transparent;
-  border-radius: 10px;
-  padding: 10px 16px;
-  font-weight: 750;
-  transition: transform .15s, background .15s;
-}
-
-.btn:hover { transform: translateY(-1px); }
-
-.btn-primary { background: var(--primary); color: white; }
-.btn-primary:hover { background: var(--primary-dark); }
-
-.btn-light { background: white; color: #172554; }
-.btn-outline { background: transparent; color: var(--ink); border-color: var(--border); }
-.btn-soft { background: var(--surface-2); color: var(--ink); }
-.hero .btn-outline { color: white; border-color: #56648e; }
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin: 18px 0 26px;
-}
-
-.stat {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: 18px;
-  border-radius: 15px;
-  box-shadow: var(--shadow);
-}
-
-.stat-number { font-size: 25px; font-weight: 850; line-height: 1.3; }
-.stat-label { color: var(--muted); font-size: 12px; }
-
-.progress-track {
-  background: rgba(255,255,255,.18);
-  height: 7px;
-  border-radius: 20px;
-  overflow: hidden;
-  margin-top: 24px;
-}
-
-.progress-fill {
-  width: 0;
-  height: 100%;
-  background: #ffb26f;
-  border-radius: inherit;
-  transition: width .3s;
-}
-
-.hero-progress {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  font-size: 12px;
-  margin-top: 9px;
-  color: #e0e7ff;
-}
-
-.section-heading {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 30px 0 14px;
-}
-
-.section-heading h2 {
-  margin: 3px 0 0;
-  font: 750 25px Georgia, serif;
-}
-
-.section-heading p { margin: 4px 0 0; color: var(--muted); }
-
-.section-kicker {
-  font-size: 11px;
-  font-weight: 850;
-  letter-spacing: .13em;
-  text-transform: uppercase;
-  color: var(--primary);
-}
-
-.team-grid {
-  display: grid;
-  grid-template-columns: 1.1fr .9fr;
-  gap: 16px;
-}
-
-.team-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 17px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-}
-
-.team-media {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  display: block;
-  object-fit: cover;
-  background: var(--surface-2);
-}
-
-.team-caption { padding: 16px 18px 18px; }
-.team-caption h3 { margin: 0 0 4px; font-size: 17px; }
-.team-caption p { color: var(--muted); margin: 0; font-size: 13px; }
-
-.lesson-layout {
-  display: grid;
-  grid-template-columns: 245px minmax(0, 1fr);
-  gap: 20px;
-  align-items: start;
-  margin-top: 28px;
-}
-
-.sidebar {
-  position: sticky;
-  top: 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 15px;
-  box-shadow: var(--shadow);
-}
-
-.sidebar h3 {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  margin: 4px 6px 12px;
-}
-
-.pills { display: grid; gap: 5px; }
-
-.pills button {
-  text-align: left;
-  border: 1px solid transparent;
-  border-radius: 10px;
-  padding: 10px;
-  background: transparent;
-  color: var(--ink);
-  font-size: 13px;
-  font-weight: 650;
-}
-
-.pills button:hover { background: var(--surface-2); }
-
-.pills button.on {
-  background: var(--primary);
-  color: white;
-}
-
-.pills button.done:not(.on)::after {
-  content: " ✓";
-  color: var(--green);
-  font-weight: 900;
-}
-
-.pills button.on.done::after { color: white; }
-
-.lesson-card {
-  min-width: 0;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: clamp(16px, 3vw, 28px);
-  box-shadow: var(--shadow);
-}
-
-.lesson-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 9px;
-  background: var(--surface-2);
-  color: var(--muted);
-  border-radius: 7px;
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.badge.accent { color: var(--primary); }
-
-.lesson-title {
-  font: 750 clamp(24px, 3vw, 31px)/1.2 Georgia, serif;
-  margin: 0 0 10px;
-}
-
-.lesson-description { color: var(--muted); margin: 0 0 22px; }
-
-.exercise {
-  padding: 18px 0;
-  border-top: 1px solid var(--border);
-}
-
-.exercise h3 { font-size: 16px; margin: 0 0 10px; }
-.exercise-prompt { margin: 0 0 12px; }
-
-code {
-  font-family: Consolas, "Courier New", monospace;
-  background: var(--surface-2);
-  border-radius: 5px;
-  padding: 2px 5px;
-  font-size: .92em;
-}
-
-textarea {
-  width: 100%;
-  min-height: 220px;
-  resize: vertical;
-  display: block;
-  background: var(--code);
-  color: var(--code-text);
-  border: 1px solid #374151;
-  border-radius: 12px;
-  padding: 15px;
-  font: 13px/1.65 Consolas, "Courier New", monospace;
-  tab-size: 2;
-  white-space: pre;
-  overflow: auto;
-}
-
-textarea:focus { border-color: var(--primary); outline: 2px solid var(--primary); }
-
-.editor-label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-  font-size: 12px;
-  font-weight: 800;
-  margin: 0 0 8px;
-}
-
-.editor-label span { color: var(--muted); font-weight: 500; }
-
-.btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
-
-.syntax-box {
-  margin: 12px 0;
-  padding: 13px 15px;
-  border: 1px solid var(--border);
-  border-radius: 11px;
-  background: var(--surface-2);
-  font-size: 13px;
-}
-
-.syntax-box.good { border-color: var(--green); }
-.syntax-box.bad { border-color: var(--red); }
-.syntax-title { font-weight: 800; }
-.syntax-good { color: var(--green); }
-.syntax-bad { color: var(--red); }
-.syntax-box ul { margin: 8px 0 0; padding-left: 22px; }
-.syntax-box li { margin: 5px 0; overflow-wrap: anywhere; }
-.syntax-note { color: var(--muted); margin-top: 7px; font-size: 12px; }
-
-.res { list-style: none; padding: 0; margin: 12px 0; }
-.res li { padding: 9px 12px; border-radius: 8px; margin: 6px 0; font-size: 13px; }
-.res .y { background: rgba(22,131,74,.11); color: var(--green); }
-.res .n { background: rgba(197,45,58,.10); color: var(--red); }
-
-.msg { font-weight: 750; margin: 10px 0; min-height: 1.5em; }
-.hint-box {
-  padding: 12px 14px;
-  border-left: 3px solid var(--accent);
-  background: var(--surface-2);
-  border-radius: 0 8px 8px 0;
-  margin: 12px 0;
-}
-
-.ans {
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  background: var(--code);
-  color: var(--code-text);
-  border-radius: 12px;
-  padding: 15px;
-  font: 13px/1.65 Consolas, monospace;
-  margin-top: 10px;
-  overflow: auto;
-}
-
-.preview-wrap {
-  margin-top: 20px;
-  border: 1px solid var(--border);
-  border-radius: 13px;
-  overflow: hidden;
-}
-
-.preview-head {
-  padding: 10px 13px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  background: var(--surface-2);
-  font-size: 12px;
-  font-weight: 800;
-}
-
-.preview-wrap iframe {
-  width: 100%;
-  height: 260px;
-  display: block;
-  border: 0;
-  background: white;
-}
-
-.quiz-option {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  color: var(--ink);
-  border-radius: 10px;
-  padding: 12px 14px;
-  margin: 8px 0;
-  font-weight: 600;
-}
-
-.quiz-option:hover:not(:disabled) { border-color: var(--primary); }
-.quiz-option.right { border-color: var(--green); background: rgba(22,131,74,.12); }
-.quiz-option.wrong { border-color: var(--red); background: rgba(197,45,58,.1); }
-
-.exercise-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding-top: 20px;
-  margin-top: 10px;
-  border-top: 1px solid var(--border);
-}
-
-.foot {
-  text-align: center;
-  color: var(--muted);
-  font-size: 12px;
-  padding: 35px 0 10px;
-}
-
-.hidden { display: none !important; }
-
-@media (max-width: 800px) {
-  .lesson-layout { grid-template-columns: 1fr; }
-  .sidebar { position: static; }
-  .pills {
-    display: flex;
-    overflow-x: auto;
-    padding-bottom: 5px;
-  }
-  .pills button { flex: 0 0 auto; }
-}
-
-@media (max-width: 600px) {
-  .wrap { padding: 16px 12px 40px; }
-  .topbar-inner { padding: 10px 13px; }
-  .brand-logo { width: 42px; height: 42px; }
-  .brand-sub { display: none; }
-  .hero { border-radius: 17px; padding: 24px 19px; }
-  .stats { gap: 7px; }
-  .stat { padding: 12px 10px; }
-  .stat-number { font-size: 21px; }
-  .stat-label { font-size: 10px; }
-  .team-grid { grid-template-columns: 1fr; }
-  .lesson-card { padding: 17px 13px; }
-  textarea { min-height: 210px; padding: 12px; font-size: 12px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
-  }
-}
+:root{color-scheme:light;--green:#16834a;--red:#c52d3a;--code-text:#e5e7eb}
+:root[data-theme="dark"]{color-scheme:dark;--green:#5cdb97;--red:#ff858c}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{margin:0;background:var(--bg);color:var(--ink)}
+button,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+a{color:var(--primary)}img,video{max-width:100%}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border)}
+.topbar-inner{max-width:1240px;margin:auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand-logo{width:48px;height:48px;object-fit:contain;border-radius:12px;background:#fff;border:1px solid var(--border);padding:3px;flex-shrink:0}
+.brand-name{font-weight:800;line-height:1.3}.brand-sub{color:var(--muted);font-size:12px}
+.icon-btn{border:1px solid var(--border);background:var(--surface);color:var(--ink);padding:9px 12px;border-radius:10px;font-weight:700}
+.wrap{margin:auto;padding:26px 22px 60px}
+.hero{position:relative;overflow:hidden;padding:clamp(24px,5vw,48px);color:#fff;border-radius:24px;margin-bottom:22px;box-shadow:var(--shadow)}
+.hero::before{content:"";position:absolute;width:290px;height:290px;border:48px solid;border-radius:50%;right:-90px;top:-130px;pointer-events:none}
+.hero-content{position:relative;z-index:1}
+.eyebrow{text-transform:uppercase;font-size:11px;font-weight:800;letter-spacing:.17em;opacity:.85}
+.hero h1{margin:12px 0;line-height:1.13}.hero p{margin:0}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn{border:1px solid transparent;border-radius:10px;transition:transform .15s,background .15s}.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--primary)}.btn-primary:hover{background:var(--primary-dark)}
+.btn-outline{background:transparent;color:var(--ink);border-color:var(--border)}.btn-soft{background:var(--surface-2);color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0 26px}
+.stat{background:var(--surface);border:1px solid var(--border);padding:18px;border-radius:15px;box-shadow:var(--shadow)}
+.stat-label{color:var(--muted)}
+.progress-track{background:rgba(255,255,255,.18);height:7px;border-radius:20px;overflow:hidden;margin-top:24px}
+.progress-fill{width:0;height:100%;border-radius:inherit;transition:width .3s}
+.hero-progress{display:flex;justify-content:space-between;gap:12px;font-size:12px;margin-top:9px}
+.section-heading{margin:30px 0 14px}.section-heading h2{margin:3px 0 0}.section-heading p{margin:4px 0 0;color:var(--muted)}
+.section-kicker{font-size:11px;font-weight:850;letter-spacing:.13em;text-transform:uppercase}
+.team-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.team-card{background:var(--surface);border:1px solid var(--border);border-radius:17px;overflow:hidden;box-shadow:var(--shadow)}
+.team-media{width:100%;aspect-ratio:16/10;display:block;object-fit:cover;background:var(--surface-2)}
+.team-caption{padding:16px 18px 18px}.team-caption h3{margin:0 0 4px}.team-caption p{color:var(--muted);margin:0;font-size:14px}
+.lesson-layout{display:grid;gap:20px;align-items:start;margin-top:28px}
+.sidebar{position:sticky;top:16px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:15px;box-shadow:var(--shadow)}
+.sidebar h3{font-size:12px;text-transform:uppercase;letter-spacing:.1em;margin:4px 6px 12px}
+.pills{display:grid;gap:5px}
+.pills button{text-align:left;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--ink)}
+.pills button:hover{background:var(--surface-2)}.pills button.on{color:#fff}
+.pills button.done:not(.on)::after{content:" ✓";color:var(--green);font-weight:900}.pills button.on.done::after{color:#fff}
+.lesson-card{min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow)}
+.lesson-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:12px}
+.badge{display:inline-flex;padding:4px 9px;background:var(--surface-2);color:var(--muted);border-radius:7px;font-size:11px;font-weight:800}
+.lesson-title{margin:0 0 10px;line-height:1.2}.lesson-description{color:var(--muted);margin:0 0 22px}
+.exercise{padding:18px 0;border-top:1px solid var(--border)}.exercise h3{margin:0 0 10px}.exercise-prompt{margin:0 0 12px}
+code{font-family:Consolas,"Courier New",monospace;border-radius:5px;padding:2px 5px;font-size:.92em}
+textarea{width:100%;min-height:220px;resize:vertical;display:block;background:var(--code);color:var(--code-text);border:1px solid #374151;border-radius:12px;padding:15px;tab-size:2;white-space:pre;overflow:auto}
+.editor-label{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;font-weight:800;margin:0 0 8px}.editor-label span{color:var(--muted);font-weight:500}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.syntax-box{margin:12px 0;padding:13px 15px;border:1px solid var(--border);border-radius:11px;background:var(--surface-2)}
+.syntax-box.good{border-color:var(--green)}.syntax-box.bad{border-color:var(--red)}
+.syntax-title{font-weight:800}.syntax-good{color:var(--green)}.syntax-bad{color:var(--red)}
+.syntax-box ul{margin:8px 0 0;padding-left:22px}.syntax-box li{margin:5px 0;overflow-wrap:anywhere}.syntax-note{color:var(--muted);margin-top:7px;font-size:13px}
+.res{list-style:none;padding:0;margin:12px 0}.res li{padding:9px 12px;border-radius:8px;margin:6px 0}
+.res .y{background:rgba(22,131,74,.11);color:var(--green)}.res .n{background:rgba(197,45,58,.1);color:var(--red)}
+.msg{font-weight:700;margin:10px 0;min-height:1.5em}
+.hint-box{padding:12px 14px;border-left:3px solid var(--accent);background:var(--surface-2);border-radius:0 8px 8px 0;margin:12px 0}
+.ans{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--code);color:var(--code-text);border-radius:12px;padding:15px;font:13px/1.65 Consolas,monospace;margin-top:10px;overflow:auto}
+.preview-wrap{margin-top:20px;border:1px solid var(--border);border-radius:13px;overflow:hidden}
+.preview-head{padding:10px 13px;display:flex;justify-content:space-between;gap:8px;background:var(--surface-2);font-size:12px;font-weight:800}
+.preview-wrap iframe{width:100%;height:260px;display:block;border:0;background:#fff}
+.quiz-option{display:block;width:100%;text-align:left;background:var(--surface-2);border:1px solid var(--border);color:var(--ink);border-radius:10px;margin:8px 0;font-weight:600}
+.quiz-option:hover:not(:disabled){border-color:var(--primary)}.quiz-option.right{border-color:var(--green);background:rgba(22,131,74,.12)}.quiz-option.wrong{border-color:var(--red);background:rgba(197,45,58,.1)}
+.exercise-nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:20px;margin-top:10px;border-top:1px solid var(--border)}
+.foot{text-align:center;color:var(--muted);font-size:13px;padding:35px 0 10px}
+.hidden{display:none!important}
+@media(max-width:800px){.sidebar{position:static}.pills{display:flex;overflow-x:auto;padding-bottom:5px}.pills button{flex:0 0 auto}}
+@media(max-width:600px){.wrap{padding:16px 12px 40px}.topbar-inner{padding:10px 13px}.brand-logo{width:42px;height:42px}.brand-sub{display:none}.hero{border-radius:17px;padding:24px 19px}.stats{gap:7px}.stat{padding:12px 10px}.team-grid{grid-template-columns:1fr}.lesson-card{padding:17px 13px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+/* CodeX brand layer: Poppins + orange / black / white. Load AFTER the page's own <style>. */
+:root{--bg:#f4f4f4;--surface:#fff;--surface-2:#f0f0f0;--ink:#0b0b0c;--muted:#5d5d65;--primary:#ff5010;--primary-dark:#d9400a;--accent:#ff5010;--border:#e1e1e1;--code:#0b0b0c;--shadow:0 10px 30px rgba(0,0,0,.07)}
+:root[data-theme="dark"]{--bg:#0b0b0c;--surface:#161617;--surface-2:#232325;--ink:#fff;--muted:#b6b6bc;--primary:#ff6a2b;--primary-dark:#ff5010;--accent:#ff6a2b;--border:#2e2e31;--code:#050506}
+body,button,textarea,.hero h1,.section-heading h2,.lesson-title{font-family:Poppins,"Segoe UI",system-ui,sans-serif}
+body{font-size:17px;line-height:1.7}
+.topbar{border-bottom:4px solid var(--primary)}
+.brand-name{font-size:17px;font-weight:700}
+.wrap{max-width:1240px}
+.hero{background:#0b0b0c}
+.hero::before{border-color:rgba(255,80,16,.16)}
+.hero h1{font-weight:700;font-size:clamp(34px,5.4vw,58px);letter-spacing:-.02em;max-width:820px}
+.hero p{font-size:18px;color:#d8d8dc;max-width:720px}
+.progress-fill{background:var(--primary)}
+.hero-progress{color:#d8d8dc}
+.btn{font-size:16px;padding:12px 20px;font-weight:600}
+.btn-light{background:#fff;color:#0b0b0c}
+.hero .btn-outline{color:#fff;border-color:#666}
+.btn-primary{color:#fff}
+.stat-number{font-size:30px;font-weight:700;color:var(--primary)}
+.stat-label{font-size:13px}
+.section-heading h2{font-size:30px;font-weight:700}
+.section-kicker{color:var(--primary)}
+.lesson-layout{grid-template-columns:275px minmax(0,1fr)}
+.pills button{font-size:15px;padding:12px;font-weight:500}
+.pills button.on{background:var(--primary)}
+.lesson-card{padding:clamp(18px,3.4vw,40px)}
+.lesson-title{font-size:clamp(28px,3.6vw,38px);font-weight:700}
+.lesson-description{font-size:17px}
+.exercise h3{font-size:20px}
+.exercise-prompt{font-size:17px}
+.syntax-box{font-size:15px}
+.res li{font-size:15px}
+.quiz-option{font-size:16px;padding:14px 16px}
+.team-caption h3{font-size:19px}
+.badge.accent{color:var(--primary)}
+code{background:rgba(255,80,16,.12);color:var(--ink)}
+.tabs{display:flex;gap:8px;margin:0 0 22px;border-bottom:2px solid var(--border)}
+.tabs button{background:none;border:0;border-bottom:4px solid transparent;margin-bottom:-2px;padding:11px 18px;font-weight:600;font-size:16px;color:var(--muted)}
+.tabs button.on{color:var(--ink);border-bottom-color:var(--primary)}
+.notes h3{font-size:24px;margin:0 0 8px}
+.notes h4{font-size:14px;color:var(--primary);margin:26px 0 10px;text-transform:uppercase;letter-spacing:.09em}
+.notes p,.notes li{font-size:17px}
+.notes ul{padding-left:22px}.notes li{margin:7px 0}
+.live{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.live textarea{min-height:230px;font:14px/1.6 Consolas,monospace;background:var(--code);color:#ececec;border:1px solid #333;border-radius:12px;padding:14px}
+.live iframe{width:100%;min-height:230px;border:1px solid var(--border);border-radius:12px;background:#fff}
+.notes .btn{margin-top:18px}
+.edwrap{display:flex;background:var(--code);border:1px solid #3a3a3c;border-radius:12px;overflow:hidden}
+.edwrap:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px rgba(255,80,16,.28)}
+.edwrap textarea{flex:1;min-width:0;min-height:290px;border:0;border-radius:0;outline:0;background:transparent;font:15px/25.5px Consolas,"Courier New",monospace;padding:15px 15px 15px 8px}
+.gut{flex:none;width:48px;overflow:hidden;padding:15px 8px 15px 0;text-align:right;color:#8a8a90;font:14px/25.5px Consolas,monospace;background:rgba(255,255,255,.05);user-select:none}
+.gut div{height:25.5px}
+.gut .bad{background:#d32f2f;color:#fff;border-radius:0 4px 4px 0}
+.chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-height:36px;margin:8px 0;font-size:13px;color:var(--muted)}
+.chips button{border:1px solid var(--primary);background:transparent;color:var(--primary);border-radius:8px;padding:3px 10px;font:600 13px Consolas,monospace}
+@media(max-width:700px){.live{grid-template-columns:1fr}.lesson-layout{grid-template-columns:1fr}}
+
+.brand-name{font-size:25px;font-weight:800;letter-spacing:-.01em;line-height:1.2;color:var(--ink)}
+.brand-name .x{color:var(--primary)}
+.vswin{border:1px solid #38383b;border-radius:12px;overflow:hidden;background:#1c1c1e;box-shadow:0 12px 30px rgba(0,0,0,.25)}
+.vsbar{position:relative;display:flex;align-items:center;height:38px;padding:0 14px;background:#2b2b2e;border-bottom:1px solid #1a1a1c}
+.dots{display:flex;gap:8px}.dots i{width:12px;height:12px;border-radius:50%;display:block}
+.dots .r{background:#ff5f57}.dots .y{background:#febc2e}.dots .g{background:#28c840}
+.vstitle{position:absolute;left:0;right:0;text-align:center;font-size:12.5px;color:#a8a8ae;pointer-events:none}
+.vstab{display:flex;background:#252527}
+.vstab span{padding:8px 18px;font-size:13px;color:#fff;background:#1c1c1e;border-top:2px solid var(--primary);font-family:Consolas,monospace}
+.vswin .edwrap{border:0;border-radius:0;box-shadow:none!important}
+.vsstat{display:flex;gap:18px;align-items:center;padding:5px 14px;background:var(--primary);color:#fff;font-size:12px;font-weight:600}
+.vsstat .sp{margin-left:auto}
+.emrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:12px 0 2px;font-size:13px;color:var(--muted)}
+.emrow b{color:var(--primary)}
+.emrow button{border:1px solid var(--border);background:var(--surface-2);color:var(--ink);border-radius:8px;padding:3px 10px;font:600 13px Consolas,monospace}
+.emrow button:hover{border-color:var(--primary);color:var(--primary)}
+.tops{display:flex;gap:8px}.hi{margin-top:12px!important;font-weight:500;color:#fff!important}
+.stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.tops .icon-btn{padding:8px 9px;font-size:13px}}
+.pills button small{display:block;font-size:11px;font-weight:500;opacity:.7}.pills button:disabled{opacity:.45;cursor:not-allowed}
+.sn{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 22px}
+.sb{display:flex;align-items:center;gap:9px;padding:10px;text-align:left;color:var(--ink);background:var(--surface-2);border:1px solid var(--border);border-radius:12px}
+.sb b{flex:none;width:26px;height:26px;display:grid;place-items:center;border-radius:50%;background:var(--surface);border:1px solid var(--border);font-size:12px}
+.sb span{font-size:14px;font-weight:600;line-height:1.2}.sb small{display:block;font-size:11px;font-weight:400;color:var(--muted)}
+.sb.on{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary)}.sb.on b{background:var(--primary);color:#fff;border-color:var(--primary)}
+.sb.ok b{background:#16834a;color:#fff;border-color:#16834a}.sb:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:600px){.sn{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pan h3{font-size:24px;margin:0 0 8px}.pan h4{font-size:14px;color:var(--primary);margin:24px 0 10px;text-transform:uppercase;letter-spacing:.09em}
+.pan p,.pan li{font-size:17px}.pan ul{padding-left:22px}
+.cg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cc{padding:14px 16px;background:var(--surface-2);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:12px;font-size:16px}
+.cc b{display:block;font-size:12px;color:var(--primary);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+@media(max-width:700px){.cg{grid-template-columns:1fr}}
+.ck{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;margin:8px 0;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;font-size:16px;cursor:pointer}
+.ck input{width:18px;height:18px;margin-top:4px;accent-color:var(--primary)}
+.foot2{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:24px;padding-top:18px;border-top:1px solid var(--border);color:var(--muted);font-size:14px}
+.reqbox{margin:14px 0;padding:14px 16px;background:var(--surface-2);border:1px solid var(--border);border-radius:12px}
+.reqbox b{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--primary)}
+.reqbox ul{list-style:none;margin:8px 0 0;padding:0}.reqbox li{display:flex;gap:8px;margin:5px 0;font-size:15px;color:var(--muted)}.reqbox li.ok{color:#16834a;font-weight:600}
+.qc{margin:14px 0;padding:18px;background:var(--surface-2);border:1px solid var(--border);border-radius:14px}
+.qc .qn{font-size:12px;font-weight:700;color:var(--primary);letter-spacing:.08em;text-transform:uppercase}.qc h5{margin:4px 0 12px;font-size:17px;font-weight:600}
+.ao{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;margin:8px 0;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:16px;cursor:pointer}
+.ao:has(input:checked){border-color:var(--primary);background:rgba(255,80,16,.08)}.ao input{margin-top:5px;accent-color:var(--primary)}
+.af{display:none;margin-top:8px;padding:10px 12px;border-radius:8px;font-size:15px}.af.show{display:block}.af.y{background:rgba(22,131,74,.13);color:#16834a}.af.n{background:rgba(197,45,58,.11);color:#c52d3a}
+.rc{margin-top:18px;padding:20px;border-radius:14px;border:1px solid var(--border);background:var(--surface-2)}.rc.pass{border-color:#16834a;background:rgba(22,131,74,.1)}.rc.fail{border-color:#c52d3a;background:rgba(197,45,58,.09)}
+.rc .big{font-size:34px;font-weight:700}
+.rep{width:100%;border-collapse:collapse;font-size:15px}.rep th,.rep td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--border)}.rep th{color:var(--muted);font-weight:600;font-size:13px}
+.toast{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:100;max-width:min(380px,calc(100vw - 40px));padding:13px 18px;color:#fff;background:#0b0b0c;border-left:4px solid var(--primary);border-radius:11px;box-shadow:0 10px 30px rgba(0,0,0,.25);font-size:15px;opacity:0;pointer-events:none;transform:translateY(10px);transition:.2s}.toast.show{opacity:1;transform:none}
+.edbox{position:relative;flex:1;min-width:0;display:flex}.edbox textarea{position:relative;z-index:1;background:transparent!important;color:transparent!important;-webkit-text-fill-color:transparent;caret-color:#fff;white-space:pre;overflow:auto}
+.hl{position:absolute;inset:0;margin:0;padding:15px 15px 15px 8px;overflow:hidden;pointer-events:none;white-space:pre;font:15px/25.5px Consolas,"Courier New",monospace;color:#e6e6e6}
+.hl .t{color:#ff8a4c}.hl .a{color:#ffd479}.hl .s{color:#8fd694}.hl .c{color:#7d8590;font-style:italic}.hl .d{color:#9aa0a6}
 </style>
 </head>
-
 <body>
-<div class="topbar">
-  <div class="topbar-inner">
-    <div class="brand">
-      <img class="brand-logo" src="1.png" alt="SAM learning workbook logo">
-      <div>
-        <div class="brand-name">SAM Learning</div>
-        <div class="brand-sub">HTML Practice Workbook</div>
-      </div>
-    </div>
-    <div class="top-actions">
-      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle colour theme">◐ Theme</button>
-    </div>
-  </div>
-</div>
-
+<div class="topbar"><div class="topbar-inner">
+ <div class="brand"><img class="brand-logo" src="1.png" alt="Team logo"><div><div class="brand-name">Code<span class="x">X</span></div><div class="brand-sub">HTML Practice Workbook</div></div></div>
+ <div class="tops"><button class="icon-btn" id="repBtn" type="button">My progress</button><button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle colour theme">◐ Theme</button></div>
+</div></div>
 <div class="wrap">
-  <header class="hero">
-    <div class="hero-content">
-      <div class="eyebrow">Learn · Practise · Recall · Build</div>
-      <h1>Master HTML, one line at a time.</h1>
-      <p>An interactive workbook to help you write real HTML, understand web structure, find mistakes and build your confidence as a developer.</p>
-      <div class="hero-actions">
-        <button class="btn btn-light" id="startBtn" type="button">Start learning →</button>
-        <button class="btn btn-outline" id="teamBtn" type="button">Meet our team</button>
-      </div>
-      <div class="progress-track"><div class="progress-fill" id="pb"></div></div>
-      <div class="hero-progress">
-        <span id="pt">0 of 0 steps complete</span>
-        <span id="percent">0%</span>
-      </div>
-    </div>
-  </header>
-
-  <div class="stats">
-    <div class="stat"><div class="stat-number" id="statLessons">10</div><div class="stat-label">Learning sections</div></div>
-    <div class="stat"><div class="stat-number" id="statSteps">0</div><div class="stat-label">Completed exercises</div></div>
-    <div class="stat"><div class="stat-number">Live</div><div class="stat-label">HTML syntax feedback</div></div>
-  </div>
-
-  <section id="team" aria-labelledby="teamTitle">
-    <div class="section-heading">
-      <div>
-        <div class="section-kicker">Who we are</div>
-        <h2 id="teamTitle">Meet Our Team</h2>
-        <p>Learning together. Building together.</p>
-      </div>
-    </div>
-    <div class="team-grid">
-      <article class="team-card">
-        <img class="team-media" src="group.jpeg" alt="Our team working and learning together" loading="lazy">
-        <div class="team-caption">
-          <h3>One team, one vision</h3>
-          <p>A community that believes in learning, collaboration and continuous improvement.</p>
-        </div>
-      </article>
-      <article class="team-card">
-        <video class="team-media" controls preload="metadata" playsinline aria-label="Video introducing our team">
-          <source src="team.mp4" type="video/mp4">
-          Your browser does not support HTML video.
-        </video>
-        <div class="team-caption">
-          <h3>Our team in action</h3>
-          <p>Take a look at our team and the people behind the learning experience.</p>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section id="learning" aria-label="HTML lessons">
-    <div class="section-heading">
-      <div>
-        <div class="section-kicker">Your learning journey</div>
-        <h2>Explore the lessons</h2>
-        <p>Choose a topic and practise at your own pace.</p>
-      </div>
-    </div>
-
-    <div class="lesson-layout">
-      <aside class="sidebar">
-        <h3>Course contents</h3>
-        <nav class="pills" id="pills" aria-label="Lesson navigation"></nav>
-      </aside>
-      <main id="main" class="lesson-card" aria-live="polite"></main>
-    </div>
-  </section>
-
-  <footer class="foot">
-    <p>HTML Practice Workbook · Prepared by SAM</p>
-    <p>Your progress is saved locally in this browser.</p>
-    <button class="btn btn-outline" id="reset" type="button">Reset learning progress</button>
-  </footer>
+<header class="hero"><div class="hero-content">
+ <div class="eyebrow">Learn · Practise · Recall · Build</div>
+ <h1>Master HTML, one line at a time.</h1>
+ <p>An interactive workbook to help you write real HTML, understand web structure, find mistakes and build your confidence as a developer.</p>
+ <p id="hi" class="hi"></p>
+ <div class="hero-actions"><button class="btn btn-light" id="startBtn" type="button">Start learning →</button><button class="btn btn-outline" id="teamBtn" type="button">Meet our team</button></div>
+ <div class="progress-track"><div class="progress-fill" id="pb"></div></div>
+ <div class="hero-progress"><span id="pt">0 of 0 steps complete</span><span id="percent">0%</span></div>
+</div></header>
+<div class="stats">
+ <div class="stat"><div class="stat-number" id="st1">0/10</div><div class="stat-label">Lessons completed</div></div>
+ <div class="stat"><div class="stat-number" id="st2">0/10</div><div class="stat-label">Teaching completed</div></div>
+ <div class="stat"><div class="stat-number" id="st3">0/10</div><div class="stat-label">Practice completed</div></div>
+ <div class="stat"><div class="stat-number" id="st4">–</div><div class="stat-label">Assessment average</div></div>
+</div>
+<section id="team" aria-labelledby="teamTitle">
+ <div class="section-heading"><div><div class="section-kicker">Who we are</div><h2 id="teamTitle">Meet Our Team</h2><p>Learning together. Building together.</p></div></div>
+ <div class="team-grid">
+  <article class="team-card"><img class="team-media" src="group.jpeg" alt="Our team working and learning together" loading="lazy"><div class="team-caption"><h3>One team, one vision</h3><p>A community that believes in learning, collaboration and continuous improvement.</p></div></article>
+  <article class="team-card"><video class="team-media" controls preload="metadata" playsinline aria-label="Video introducing our team"><source src="team.mp4" type="video/mp4">Your browser does not support HTML video.</video><div class="team-caption"><h3>Our team in action</h3><p>Take a look at our team and the people behind the learning experience.</p></div></article>
+ </div>
+</section>
+<section id="learning" aria-label="HTML lessons">
+ <div class="section-heading"><div><div class="section-kicker">Your learning journey</div><h2>Explore the lessons</h2><p>Choose a topic and practise at your own pace.</p></div></div>
+ <div class="lesson-layout">
+  <aside class="sidebar"><h3>Course contents</h3><nav class="pills" id="pills" aria-label="Lesson navigation"></nav></aside>
+  <main id="main" class="lesson-card" aria-live="polite"></main>
+ </div>
+</section>
+<footer class="foot"><p>HTML Practice Workbook · Prepared by SAM</p><p>Your progress is saved locally in this browser.</p><button class="btn btn-outline" id="reset" type="button">Reset learning progress</button></footer>
 </div>
 
 <script>
-"use strict";
-
-const has = (d, s) => !!d.querySelector(s);
-const n = (d, s) => d.querySelectorAll(s).length;
-const tx = (d, s) => (d.querySelector(s)?.textContent || "").trim();
-const at = (d, s, a, re) => re.test(d.querySelector(s)?.getAttribute(a) || "");
-const key = (l, s) => l + "." + s;
-
-const L = [
-{
- t:"Foundations",
- i:"Every page starts with <!DOCTYPE html>, then <html> containing <head> (page information, <title>) and <body> (visible content). Headings run from <h1> to <h6>.",
- s:[
-  {q:"Which element makes the largest-level heading?",o:["<heading>","<h1>","<head>","<title>"],c:1,w:"<h1> is the largest heading. <head> holds page information, not the main visible content."},
-  {p:"Write a complete HTML document with an h1 saying “My First Website”, a paragraph introducing yourself, and a link to https://www.google.com",h:"Start with <!DOCTYPE html>, then html, head (with title) and body.",a:'<!DOCTYPE html>\n<html lang="en">\n<head>\n  <title>My First Website</title>\n</head>\n<body>\n  <h1>My First Website</h1>\n  <p>Hi, I am Sam.</p>\n  <a href="https://www.google.com">Google</a>\n</body>\n</html>',k:[
-   ["Starts with <!DOCTYPE html>",(d,r)=>/^\s*<!doctype html>/i.test(r)],
-   ["Has html, head and body",d=>has(d,"html")&&has(d,"head")&&has(d,"body")],
-   ["Has a non-empty title",d=>tx(d,"title")!==""],
-   ["h1 says My First Website",d=>/my first website/i.test(tx(d,"h1"))],
-   ["Has a paragraph",d=>tx(d,"p")!==""],
-   ["Link points to Google",d=>at(d,"a","href",/^https:\/\/www\.google\.com\/?$/)]
-  ]}
- ]
-},
-{
- t:"Text",
- i:"Paragraphs use <p>. <strong> marks important text, <em> adds emphasis, and <br> makes a line break without a closing tag.",
- s:[
-  {q:"Which tag marks text as important?",o:["<b>","<strong>","<big>","<mark>"],c:1,w:"<strong> identifies important text. Browsers usually display it in bold."},
-  {p:"Write an h2 “Hobbies”, then a paragraph containing the word important inside strong, then another paragraph with a <br> inside it.",h:"<br> needs no closing tag.",a:"<h2>Hobbies</h2>\n<p>This is <strong>important</strong>.</p>\n<p>Line one<br>Line two</p>",k:[
-   ["Has an h2 called Hobbies",d=>/hobbies/i.test(tx(d,"h2"))],
-   ["Has strong text",d=>tx(d,"strong")!==""],
-   ["Has a br",d=>has(d,"p br")],
-   ["Has two paragraphs",d=>n(d,"p")>=2]
-  ]}
- ]
-},
-{
- t:"Links",
- i:"The anchor <a> makes links. href is the destination. target=\"_blank\" opens a new tab. Use href=\"#id\" to jump to an element on the same page.",
- s:[
-  {p:"Make a link with the text Visit that goes to https://example.com and opens in a new tab.",h:"Use the target attribute.",a:'<a href="https://example.com" target="_blank" rel="noopener">Visit</a>',k:[
-   ["Is an a element with text Visit",d=>/^visit$/i.test(tx(d,"a"))],
-   ["href is https://example.com",d=>at(d,"a","href",/^https:\/\/example\.com\/?$/)],
-   ["target is _blank",d=>at(d,"a","target",/^_blank$/)]
-  ]},
-  {p:"Make a link to #contact and a heading with id=\"contact\" that it jumps to.",h:"The id value must match the part after #.",a:'<a href="#contact">Contact</a>\n<h2 id="contact">Contact us</h2>',k:[
-   ['Link has href="#contact"',d=>at(d,"a","href",/^#contact$/)],
-   ['An element has id="contact"',d=>has(d,"#contact")]
-  ]}
- ]
-},
-{
- t:"Images",
- i:"<img> displays a picture. src is the file path, alt describes the image, and width can control its display width. The img element has no closing tag.",
- s:[
-  {q:"Why should every informative image have an alt attribute?",o:["It makes the image load faster","It describes the image to screen readers and when it cannot load","It changes the image size","It is required for colour"],c:1,w:"Alt text provides a text alternative for people using screen readers and when images cannot be displayed."},
-  {p:'Add the image photo.jpg with alt text "My portrait" and a width of 200.',h:'Use <img src="..." alt="..." width="...">.',a:'<img src="photo.jpg" alt="My portrait" width="200">',k:[
-   ["Has an img element",d=>has(d,"img")],
-   ["src is photo.jpg",d=>at(d,"img","src",/^photo\.jpg$/)],
-   ["alt is My portrait",d=>at(d,"img","alt",/^my portrait$/i)],
-   ["width is 200",d=>at(d,"img","width",/^200$/)]
-  ]}
- ]
-},
-{
- t:"Lists",
- i:"<ul> is a bulleted list, <ol> is a numbered list, and each list item goes inside <li>.",
- s:[
-  {q:"Which list is best for step-by-step instructions?",o:["<ul>","<ol>","<dl>","<li>"],c:1,w:"<ol> numbers items, making their order clear."},
-  {p:"Write an unordered list of three hobbies.",h:"A ul wraps three li elements.",a:"<ul>\n  <li>Reading</li>\n  <li>Football</li>\n  <li>Coding</li>\n</ul>",k:[
-   ["Has a ul",d=>has(d,"ul")],
-   ["Has exactly 3 li items",d=>n(d,"ul > li")===3],
-   ["Every item has text",d=>[...d.querySelectorAll("ul > li")].every(x=>x.textContent.trim())]
-  ]}
- ]
-},
-{
- t:"Tables",
- i:"<table> holds rows <tr>. Header cells use <th>, and ordinary data cells use <td>.",
- s:[
-  {p:"Build a table with 3 rows and 2 columns: a header row (th: Name, Age) and two data rows.",h:"Row 1 uses th. Rows 2 and 3 use td.",a:"<table>\n  <tr><th>Name</th><th>Age</th></tr>\n  <tr><td>Amina</td><td>19</td></tr>\n  <tr><td>Ali</td><td>20</td></tr>\n</table>",k:[
-   ["Has a table",d=>has(d,"table")],
-   ["Has 2 header cells",d=>n(d,"th")===2],
-   ["Has 3 rows",d=>n(d,"tr")===3],
-   ["Has 4 data cells",d=>n(d,"td")===4]
-  ]}
- ]
-},
-{
- t:"Forms",
- i:"<form> collects user input. Connect each <label> to an input using matching for and id attributes. The type attribute determines the input type.",
- s:[
-  {p:"Make a form with a labelled text input for a name, a labelled email input, and a submit button.",h:"label for=\"n\" matches input id=\"n\".",a:'<form>\n  <label for="n">Name</label>\n  <input type="text" id="n" name="name">\n  <label for="e">Email</label>\n  <input type="email" id="e" name="email">\n  <button type="submit">Send</button>\n</form>',k:[
-   ["Has a form",d=>has(d,"form")],
-   ["Has a text input",d=>has(d,'input[type="text"]')],
-   ["Has an email input",d=>has(d,'input[type="email"]')],
-   ["Labels connect to existing IDs",d=>{const ls=[...d.querySelectorAll("label[for]")];return ls.length>=2&&ls.every(x=>d.getElementById(x.htmlFor))}],
-   ["Has a submit button",d=>has(d,'button[type="submit"],input[type="submit"]')]
-  ]}
- ]
-},
-{
- t:"Semantic HTML",
- i:"Semantic elements describe the parts of a page. <header>, <nav>, <main> and <footer> help organise content for browsers, assistive technology and developers.",
- s:[
-  {p:"Build a page skeleton using header, nav with one link, main with an h1, and footer.",h:"Place these elements inside body.",a:'<header>\n  <nav><a href="#">Home</a></nav>\n</header>\n<main>\n  <h1>Welcome</h1>\n</main>\n<footer>© 2026</footer>',k:[
-   ["Has a header",d=>has(d,"header")],
-   ["Has nav with a link",d=>has(d,"nav a")],
-   ["Has main with an h1",d=>has(d,"main h1")],
-   ["Has a footer",d=>has(d,"footer")]
-  ]}
- ]
-},
-{
- t:"Debugging",
- i:"Browsers may automatically repair malformed HTML. Practise identifying incorrect closing tags and fixing mistakes instead of relying on the browser.",
- s:[
-  {p:"Fix this code so the heading and paragraph are each closed correctly.",x:"<h1>Welcome\n<p>I am learning HTML</h1>",h:"Close h1 before the paragraph. Close the paragraph with </p>.",a:"<h1>Welcome</h1>\n<p>I am learning HTML</p>",k:[
-   ["h1 is closed correctly",(d,r)=>/<h1>\s*Welcome\s*<\/h1>/i.test(r)],
-   ["p is closed correctly",(d,r)=>/<p>[^<]*<\/p>/i.test(r)]
-  ]},
-  {p:"Fix the image: the tag name is wrong and alt text is missing.",x:'<image src="cat.jpg">',h:"The correct tag is img, not image.",a:'<img src="cat.jpg" alt="A cat">',k:[
-   ["Uses img instead of image",(d,r)=>/<img\b/i.test(r)&&!/<image\b/i.test(r)],
-   ['Keeps src="cat.jpg"',d=>at(d,"img","src",/^cat\.jpg$/)],
-   ["Has non-empty alt text",d=>at(d,"img","alt",/\S/)]
-  ]},
-  {p:"Fix the list: items must be li elements.",x:"<ul>\n  <p>Apples</p>\n  <p>Mangoes</p>\n</ul>",h:"Replace each p with li.",a:"<ul>\n  <li>Apples</li>\n  <li>Mangoes</li>\n</ul>",k:[
-   ["Has 2 li items",d=>n(d,"ul > li")===2],
-   ["No paragraphs inside the list",d=>!has(d,"ul p")],
-   ["Keeps both fruit names",d=>/apples/i.test(tx(d,"ul"))&&/mangoes/i.test(tx(d,"ul"))]
-  ]}
- ]
-},
-{
- t:"Final Project",
- i:"Combine your skills to build a student profile page. Try to pass every requirement before viewing the sample answer.",
- s:[
-  {p:"Create a student profile page with a title, header, main with an h1, a photo with alt text, a list of three hobbies, a contact form with labelled name and email inputs, a submit button, and a footer.",h:"Combine the document structure, image, list, form and semantic HTML lessons.",a:'<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>My Profile</title>\n</head>\n<body>\n  <header><h1>Amina’s Profile</h1></header>\n  <main>\n    <img src="me.jpg" alt="Amina smiling">\n    <h2>Hobbies</h2>\n    <ul>\n      <li>Reading</li>\n      <li>Football</li>\n      <li>Coding</li>\n    </ul>\n    <form>\n      <label for="n">Name</label>\n      <input type="text" id="n" name="name">\n      <label for="e">Email</label>\n      <input type="email" id="e" name="email">\n      <button type="submit">Send</button>\n    </form>\n  </main>\n  <footer>© 2026</footer>\n</body>\n</html>',k:[
-   ["Starts with <!DOCTYPE html>",(d,r)=>/^\s*<!doctype html>/i.test(r)],
-   ["Has a non-empty title",d=>tx(d,"title")!==""],
-   ["Has header, main and footer",d=>has(d,"header")&&has(d,"main")&&has(d,"footer")],
-   ["Has an h1",d=>tx(d,"h1")!==""],
-   ["Photo has non-empty alt text",d=>has(d,"img[alt]")&&at(d,"img","alt",/\S/)],
-   ["Has exactly 3 list items",d=>n(d,"ul > li")===3||n(d,"ol > li")===3],
-   ["Has 2 correctly labelled inputs",d=>{const ls=[...d.querySelectorAll("label[for]")];return ls.length>=2&&ls.every(x=>d.getElementById(x.htmlFor))}],
-   ["Has a submit button",d=>has(d,'form button[type="submit"],form input[type="submit"]')]
-  ]}
- ]
-}
+const has=(d,s)=>!!d.querySelector(s),n=(d,s)=>d.querySelectorAll(s).length,tx=(d,s)=>(d.querySelector(s)?.textContent||'').trim();
+const at=(d,s,a,re)=>re.test(d.querySelector(s)?.getAttribute(a)||'');
+const key=(l,s)=>l+'.'+s;
+const L=[
+{t:'Foundations',i:'Every page starts with `<!DOCTYPE html>`, then `<html>` containing `<head>` (page info, `<title>`) and `<body>` (what people see). Headings run from `<h1>` (largest) to `<h6>`.',s:[
+ {q:'Which element makes the largest-level heading?',o:['<heading>','<h1>','<head>','<title>'],c:1,w:'`<h1>` is the largest heading. `<head>` holds page information, not visible content.'},
+ {p:'Write a complete HTML document with: an h1 saying “My First Website”, a paragraph introducing yourself, and a link to https://www.google.com',h:'Start with <!DOCTYPE html>, then html, head (with title) and body.',a:'<!DOCTYPE html>\n<html>\n<head>\n  <title>My First Website</title>\n</head>\n<body>\n  <h1>My First Website</h1>\n  <p>Hi, I am Sam.</p>\n  <a href="https://www.google.com">Google</a>\n</body>\n</html>',k:[['Starts with <!DOCTYPE html>',(d,r)=>/^\s*<!doctype html>/i.test(r)],['Has html, head and body',d=>/<html/i.test(d.documentElement.outerHTML)&&has(d,'head')&&has(d,'body')],['Has a <title>',d=>tx(d,'title')!==''],['h1 says My First Website',d=>/my first website/i.test(tx(d,'h1'))],['Has a paragraph',d=>tx(d,'p')!==''],['Link points to https://www.google.com',d=>at(d,'a','href',/^https:\/\/www\.google\.com\/?$/)]]}]},
+{t:'Text',i:'Paragraphs use `<p>`. `<strong>` marks important text, `<em>` adds emphasis, and `<br>` is a line break (it has no closing tag).',s:[
+ {q:'Which tag marks text as important?',o:['<b>','<strong>','<big>','<mark>'],c:1,w:'`<strong>` means importance; browsers show it bold.'},
+ {p:'Write an h2 “Hobbies”, then a paragraph containing the word important inside strong, then another paragraph with a <br> inside it.',h:'<br> needs no closing tag.',a:'<h2>Hobbies</h2>\n<p>This is <strong>important</strong>.</p>\n<p>Line one<br>Line two</p>',k:[['Has an h2 “Hobbies”',d=>/hobbies/i.test(tx(d,'h2'))],['Has strong text',d=>tx(d,'strong')!==''],['Has a <br>',d=>has(d,'p br')],['Has two paragraphs',d=>n(d,'p')>=2]]}]},
+{t:'Links',i:'The anchor `<a>` makes links. `href` is the destination. `target="_blank"` opens a new tab. Link to a spot on the same page with `href="#id"`.',s:[
+ {p:'Make a link with the text Visit that goes to https://example.com and opens in a new tab.',h:'Use the target attribute.',a:'<a href="https://example.com" target="_blank">Visit</a>',k:[['Is an <a> with text Visit',d=>/^visit$/i.test(tx(d,'a'))],['href is https://example.com',d=>at(d,'a','href',/^https:\/\/example\.com\/?$/)],['target is _blank',d=>at(d,'a','target',/^_blank$/)]]},
+ {p:'Make a link to #contact, and a heading with id="contact" it jumps to.',h:'The id value must match the part after #.',a:'<a href="#contact">Contact</a>\n<h2 id="contact">Contact us</h2>',k:[['Link with href="#contact"',d=>at(d,'a','href',/^#contact$/)],['Element with id="contact"',d=>has(d,'#contact')]]}]},
+{t:'Images',i:'`<img>` shows pictures. `src` is the file path, `alt` describes the image for screen readers and shows if the image fails. It has no closing tag.',s:[
+ {q:'Why should every image have an alt attribute?',o:['It makes it load faster','It describes the image to screen readers and when it fails to load','It changes the size','It is required for colour'],c:1,w:'Alt text is a text alternative. It is key for accessibility.'},
+ {p:'Add the image photo.jpg with alt text “My portrait” and a width of 200.',h:'<img src="..." alt="..." width="...">',a:'<img src="photo.jpg" alt="My portrait" width="200">',k:[['Has an <img>',d=>has(d,'img')],['src is photo.jpg',d=>at(d,'img','src',/^photo\.jpg$/)],['alt is “My portrait”',d=>at(d,'img','alt',/^my portrait$/i)],['width is 200',d=>at(d,'img','width',/^200$/)]]}]},
+{t:'Lists',i:'`<ul>` is a bulleted list, `<ol>` a numbered one. Each item goes in `<li>`.',s:[
+ {q:'Which list is best for step-by-step instructions?',o:['<ul>','<ol>','<dl>','<li>'],c:1,w:'`<ol>` numbers items, so order is clear.'},
+ {p:'Write an unordered list of three hobbies.',h:'ul wraps three li items.',a:'<ul>\n  <li>Reading</li>\n  <li>Football</li>\n  <li>Coding</li>\n</ul>',k:[['Has a <ul>',d=>has(d,'ul')],['Has 3 <li> inside it',d=>n(d,'ul > li')===3],['Items have text',d=>[...d.querySelectorAll('li')].every(x=>x.textContent.trim())]]}]},
+{t:'Tables',i:'`<table>` holds rows `<tr>`. Header cells use `<th>`, data cells `<td>`.',s:[
+ {p:'Build a table with 3 rows and 2 columns: a header row (th: Name, Age) and two data rows.',h:'Row 1 uses th, rows 2 and 3 use td.',a:'<table>\n  <tr><th>Name</th><th>Age</th></tr>\n  <tr><td>Amina</td><td>19</td></tr>\n  <tr><td>Ali</td><td>20</td></tr>\n</table>',k:[['Has a <table>',d=>has(d,'table')],['2 header cells (th)',d=>n(d,'th')===2],['3 rows',d=>n(d,'tr')===3],['4 data cells (td)',d=>n(d,'td')===4]]}]},
+{t:'Forms',i:'`<form>` collects input. Each `<input>` needs a `<label>`; connect them with `for` and `id`. `type` sets the kind: text, email, and more.',s:[
+ {p:'Make a form with a labelled text input (name), a labelled email input, and a submit button.',h:'label for="x" matches input id="x".',a:'<form>\n  <label for="n">Name</label>\n  <input type="text" id="n" name="name">\n  <label for="e">Email</label>\n  <input type="email" id="e" name="email">\n  <button type="submit">Send</button>\n</form>',k:[['Has a <form>',d=>has(d,'form')],['Has a text input',d=>has(d,'input[type=text]')],['Has an email input',d=>has(d,'input[type=email]')],['Labels linked to inputs (for = id)',d=>{const l=[...d.querySelectorAll('label[for]')];return l.length>=2&&l.every(x=>d.getElementById(x.getAttribute('for')))}],['Has a submit button',d=>has(d,'button[type=submit], input[type=submit], form button:not([type])')]]}]},
+{t:'Semantic HTML',i:'Semantic tags describe a page’s parts: `<header>`, `<nav>`, `<main>`, `<footer>`. They help screen readers, search engines and other developers.',s:[
+ {p:'Build a page skeleton using header, nav (with one link), main (with an h1) and footer.',h:'Place them inside body.',a:'<header>\n  <nav><a href="#">Home</a></nav>\n</header>\n<main>\n  <h1>Welcome</h1>\n</main>\n<footer>© 2026</footer>',k:[['Has <header>',d=>has(d,'header')],['Has <nav> with a link',d=>has(d,'nav a')],['Has <main> with an h1',d=>has(d,'main h1')],['Has <footer>',d=>has(d,'footer')]]}]},
+{t:'Debugging',i:'Browsers forgive many mistakes, which hides them. Read each broken snippet carefully and fix every error.',s:[
+ {p:'Fix this code so the heading and paragraph are each closed correctly.',x:'<h1>Welcome\n<p>I am learning HTML</h1>',h:'Close h1 before the paragraph; close p with </p>.',a:'<h1>Welcome</h1>\n<p>I am learning HTML</p>',k:[['h1 closed correctly',(d,r)=>/<h1>\s*Welcome\s*<\/h1>/i.test(r)],['p closed with </p>',(d,r)=>/<p>[^<]*<\/p>/i.test(r)]]},
+ {p:'Fix the image: the tag name is wrong and alt text is missing.',x:'<image src="cat.jpg">',h:'The correct tag is img.',a:'<img src="cat.jpg" alt="A cat">',k:[['Uses <img>',(d,r)=>/<img/i.test(r)&&!/<image/i.test(r)],['Keeps src="cat.jpg"',d=>at(d,'img','src',/cat\.jpg/)],['Has non-empty alt',d=>at(d,'img','alt',/\S/)]]},
+ {p:'Fix the list: items must be li elements.',x:'<ul>\n  <p>Apples</p>\n  <p>Mangoes</p>\n</ul>',h:'Replace each p with li.',a:'<ul>\n  <li>Apples</li>\n  <li>Mangoes</li>\n</ul>',k:[['2 <li> items',d=>n(d,'ul > li')===2],['No <p> left in the list',d=>!has(d,'ul p')],['Text kept (Apples, Mangoes)',d=>/apples/i.test(tx(d,'ul'))&&/mangoes/i.test(tx(d,'ul'))]]}]},
+{t:'Final Project',i:'Put it all together. Build a complete student profile page. Every check must pass.',s:[
+ {p:'Create a student profile page with: a title, header, main with an h1, a photo (img with alt), a list of three hobbies, a contact form (labelled name and email, submit button), and a footer.',h:'Combine your earlier answers into one full document.',a:'<!DOCTYPE html>\n<html lang="en">\n<head>\n  <title>My Profile</title>\n</head>\n<body>\n  <header><h1>Amina’s Profile</h1></header>\n  <main>\n    <img src="me.jpg" alt="Amina smiling">\n    <h2>Hobbies</h2>\n    <ul><li>Reading</li><li>Football</li><li>Coding</li></ul>\n    <form>\n      <label for="n">Name</label>\n      <input type="text" id="n">\n      <label for="e">Email</label>\n      <input type="email" id="e">\n      <button type="submit">Send</button>\n    </form>\n  </main>\n  <footer>© 2026</footer>\n</body>\n</html>',k:[['Starts with <!DOCTYPE html>',(d,r)=>/^\s*<!doctype html>/i.test(r)],['Has a <title>',d=>tx(d,'title')!==''],['Has header, main and footer',d=>has(d,'header')&&has(d,'main')&&has(d,'footer')],['Has an h1',d=>tx(d,'h1')!==''],['Photo with alt text',d=>has(d,'img[alt]')&&at(d,'img','alt',/\S/)],['List of exactly 3 hobbies',d=>n(d,'ul > li')===3||n(d,'ol > li')===3],['Form with 2 labelled inputs',d=>{const l=[...d.querySelectorAll('label[for]')];return l.length>=2&&l.every(x=>d.getElementById(x.getAttribute('for')))}],['Form has a submit button',d=>has(d,'form button, form input[type=submit]')]]}]}
 ];
-
-let P = {};
-try { P = JSON.parse(localStorage.getItem("htmlwb") || "{}"); }
-catch (e) { P = {}; }
-
-let li = 0;
-let si = 0;
-let tries = 0;
-let lastEditorValue = "";
-
-const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-const fmt = s => esc(s).replace(/`([^`]+)`/g,"<code>$1</code>");
-const total = L.reduce((sum, lesson) => sum + lesson.s.length, 0);
-
-function save() {
-  try { localStorage.setItem("htmlwb", JSON.stringify(P)); }
-  catch (e) { /* Storage may be disabled or full. */ }
-}
-
-function progressCount() {
-  return Object.keys(P).filter(k => P[k]).length;
-}
-
-function updateProgress() {
-  const done = progressCount();
-  const pct = Math.round(done / total * 100);
-  document.getElementById("pb").style.width = pct + "%";
-  document.getElementById("pt").textContent = done + " of " + total + " steps complete";
-  document.getElementById("percent").textContent = pct + "%";
-  document.getElementById("statSteps").textContent = done;
-  document.getElementById("statLessons").textContent = L.length;
-}
-
-function renderPills() {
-  document.getElementById("pills").innerHTML = L.map((lesson, i) => {
-    const done = lesson.s.every((_, j) => !!P[key(i,j)]);
-    return `<button type="button" class="${i === li ? "on " : ""}${done ? "done" : ""}" data-i="${i}" aria-current="${i === li ? "step" : "false"}">${i+1}. ${esc(lesson.t)}</button>`;
-  }).join("");
-
-  document.querySelectorAll("#pills button").forEach(button => {
-    button.addEventListener("click", () => {
-      li = Number(button.dataset.i);
-      si = 0;
-      draw();
-    });
-  });
-}
-
-function showMessage(text, type) {
-  const el = document.getElementById("msg");
-  if (!el) return;
-  el.textContent = text;
-  el.style.color = type === 1 ? "var(--green)" : type === 0 ? "var(--red)" : "var(--muted)";
-}
-
-function pass() {
-  P[key(li,si)] = 1;
-  save();
-  updateProgress();
-  renderPills();
-  const next = document.getElementById("next");
-  if (next) next.disabled = false;
-}
-
-function draw() {
-  tries = 0;
-  renderPills();
-  updateProgress();
-
-  const lesson = L[li];
-  const step = lesson.s[si];
-  const main = document.getElementById("main");
-  const completed = !!P[key(li,si)];
-
-  let html = `
-    <div class="lesson-meta">
-      <span class="badge accent">LESSON ${li+1} OF ${L.length}</span>
-      <span class="badge">STEP ${si+1} OF ${lesson.s.length}</span>
-      ${completed ? '<span class="badge">✓ Completed</span>' : ""}
-    </div>
-    <h2 class="lesson-title">${esc(lesson.t)}</h2>
-    <p class="lesson-description">${fmt(lesson.i)}</p>
-    <div class="exercise">
-      <h3>${step.q ? "Knowledge check" : "Your coding challenge"}</h3>`;
-
-  if (step.q) {
-    html += `<p class="exercise-prompt">${fmt(step.q)}</p>`;
-    html += step.o.map((option, i) =>
-      `<button type="button" class="quiz-option" data-option="${i}">${esc(option)}</button>`
-    ).join("");
-    html += `<div class="msg" id="msg" aria-live="polite"></div>`;
-  } else {
-    html += `
-      <p class="exercise-prompt">${fmt(step.p)}</p>
-      <div class="editor-label">
-        <label for="code">HTML CODE EDITOR</label>
-        <span>Tab inserts spaces · Changes preview live</span>
-      </div>
-      <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="Type your HTML code here" placeholder="Write your HTML here...">${esc(step.x || "")}</textarea>
-      <div id="syntax" class="syntax-box" aria-live="polite">
-        Start typing to check your HTML.
-      </div>
-      <div class="btns">
-        <button type="button" class="btn btn-primary" id="chk">Check my code</button>
-        <button type="button" class="btn btn-outline" id="hint">Show hint</button>
-        <button type="button" class="btn btn-soft" id="clear">Clear editor</button>
-      </div>
-      <div id="hintBox" class="hint-box hidden"></div>
-      <div class="msg" id="msg" aria-live="polite"></div>
-      <ul class="res" id="res"></ul>
-      <div id="ex"></div>
-      <div class="preview-wrap">
-        <div class="preview-head"><span>LIVE PREVIEW</span><span>Sandboxed</span></div>
-        <iframe id="pv" title="Your HTML preview" sandbox></iframe>
-      </div>`;
-  }
-
-  html += `
-    </div>
-    <div class="exercise-nav">
-      <button type="button" class="btn btn-outline" id="prev">← Previous</button>
-      <span class="badge">${completed ? "Completed" : "Keep practising"}</span>
-      <button type="button" class="btn btn-primary" id="next" ${completed ? "" : "disabled"}>Next step →</button>
-    </div>`;
-
-  main.innerHTML = html;
-
-  document.getElementById("prev").addEventListener("click", prev);
-  document.getElementById("next").addEventListener("click", next);
-
-  if (step.q) {
-    document.querySelectorAll(".quiz-option").forEach(button => {
-      button.addEventListener("click", () => {
-        const chosen = Number(button.dataset.option);
-        if (chosen === step.c) {
-          document.querySelectorAll(".quiz-option").forEach(b => b.disabled = true);
-          button.classList.add("right");
-          pass();
-          showMessage("✓ Correct! " + step.w, 1);
-        } else {
-          button.classList.add("wrong");
-          button.disabled = true;
-          showMessage("Not quite. Try another answer.", 0);
-        }
-      });
-    });
-  } else {
-    const editor = document.getElementById("code");
-
-    editor.addEventListener("keydown", event => {
-      if (event.key === "Tab") {
-        event.preventDefault();
-        const start = editor.selectionStart;
-        const end = editor.selectionEnd;
-        editor.setRangeText("  ", start, end, "end");
-        editor.dispatchEvent(new Event("input"));
-      }
-    });
-
-    editor.addEventListener("input", updateEditor);
-    document.getElementById("chk").addEventListener("click", check);
-    document.getElementById("hint").addEventListener("click", () => {
-      const box = document.getElementById("hintBox");
-      box.textContent = "Hint: " + step.h;
-      box.classList.toggle("hidden");
-    });
-    document.getElementById("clear").addEventListener("click", () => {
-      editor.value = "";
-      editor.dispatchEvent(new Event("input"));
-      editor.focus();
-    });
-
-    updateEditor();
-  }
-}
-
-/*
- * Live HTML checker.
- * It detects common tag, nesting, attribute and quotation mistakes.
- * It is an educational checker, not a complete standards validator.
- */
-function checkHTMLSyntax(source) {
-  const errors = [];
-  const voidTags = new Set([
-    "area","base","br","col","embed","hr","img","input",
-    "link","meta","param","source","track","wbr"
-  ]);
-  const optionalClose = new Set([
-    "li","p","dt","dd","option","optgroup","tr","td","th",
-    "thead","tbody","tfoot"
-  ]);
-
-  const lineAt = index => source.slice(0,index).split("\n").length;
-  const report = (index, message) => {
-    errors.push("Line " + lineAt(index) + ": " + message);
-  };
-
-  // Ignore comments, doctypes and CDATA while scanning for markup.
-  const code = source.replace(
-    /<!--[\s\S]*?-->|<!doctype\b[^>]*>|<!\[CDATA\[[\s\S]*?\]\]>/gi,
-    match => " ".repeat(match.length)
-  );
-
-  const stack = [];
-  const token = /<\/?[a-zA-Z][\w:-]*(?:\s[^<>]*?)?\/?>/g;
-  let match;
-  let lastEnd = 0;
-
-  while ((match = token.exec(code)) !== null) {
-    const textBefore = code.slice(lastEnd, match.index);
-    const dangling = textBefore.indexOf("<");
-
-    if (dangling !== -1) {
-      report(lastEnd + dangling, "Possible malformed or incomplete tag.");
-    }
-
-    const tag = match[0];
-    const nameMatch = tag.match(/^<\/?([a-zA-Z][\w:-]*)/);
-    if (!nameMatch) continue;
-
-    const name = nameMatch[1].toLowerCase();
-    const closing = /^<\//.test(tag);
-    const selfClosing = /\/\s*>$/.test(tag);
-    const attrText = tag
-      .replace(/^<\/?[a-zA-Z][\w:-]*/, "")
-      .replace(/\/?>$/, "");
-
-    if (closing && attrText.trim()) {
-      report(match.index, "Closing tags should not contain attributes.");
-    }
-
-    if (!closing) {
-      const attrPattern = /([^\s"'<>/=]+)(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+))?/g;
-      const seen = new Set();
-      let attr;
-
-      while ((attr = attrPattern.exec(attrText)) !== null) {
-        const attrName = attr[1].toLowerCase();
-        const valuePart = attr[0].slice(attr[1].length).trim();
-
-        if (seen.has(attrName)) {
-          report(match.index, "Duplicate attribute \"" + attrName + "\" in <" + name + ">.");
-        }
-        seen.add(attrName);
-
-        if (valuePart === "=") {
-          report(match.index, "Missing value for attribute \"" + attrName + "\".");
-        }
-
-        if (attrName.startsWith("on") && attrName.length > 2) {
-          // Event attributes are permitted in HTML but discouraged in
-          // production applications. Do not classify them as syntax errors.
-        }
-      }
-
-      if (voidTags.has(name) && !selfClosing && /\/\s*>$/.test(tag)) {
-        // Both <br> and <br /> are accepted.
-      }
-    }
-
-    if (closing) {
-      if (voidTags.has(name)) {
-        report(match.index, "Void element </" + name + "> must not have a closing tag.");
-      } else {
-        const top = stack[stack.length - 1];
-
-        if (top && top.name === name) {
-          stack.pop();
-        } else {
-          const foundIndex = stack.map(item => item.name).lastIndexOf(name);
-
-          if (foundIndex !== -1) {
-            const unclosed = stack.slice(foundIndex + 1).map(item => item.name);
-            report(match.index,
-              "Incorrect nesting before </" + name + ">." +
-              (unclosed.length ? " Close " + unclosed.map(x => "</" + x + ">").join(", ") + " first." : "")
-            );
-            stack.length = foundIndex;
-          } else {
-            report(match.index, "Unexpected closing tag </" + name + ">.");
-          }
-        }
-      }
-    } else if (!voidTags.has(name) && !selfClosing) {
-      // HTML permits certain optional closing tags. Avoid false alarms
-      // for common list, paragraph, table and option patterns.
-      if (name === "li") {
-        const index = stack.map(item => item.name).lastIndexOf("li");
-        if (index !== -1) stack.splice(index, 1);
-      }
-      if (name === "p") {
-        const index = stack.map(item => item.name).lastIndexOf("p");
-        if (index !== -1) stack.splice(index, 1);
-      }
-      if (["td","th"].includes(name)) {
-        const index = stack.map(item => item.name).lastIndexOf("td") !== -1
-          ? stack.map(item => item.name).lastIndexOf("td")
-          : stack.map(item => item.name).lastIndexOf("th");
-        if (index !== -1) stack.splice(index, 1);
-      }
-      if (name === "tr") {
-        const index = stack.map(item => item.name).lastIndexOf("tr");
-        if (index !== -1) stack.splice(index, 1);
-      }
-
-      stack.push({name, position: match.index});
-    }
-
-    lastEnd = token.lastIndex;
-
-    // Skip raw text inside script/style so strings such as "<div>"
-    // inside JavaScript or CSS are not interpreted as HTML elements.
-    if (!closing && ["script","style"].includes(name) && !selfClosing) {
-      const closePattern = new RegExp("</" + name + "\\s*>", "ig");
-      closePattern.lastIndex = token.lastIndex;
-      const closeMatch = closePattern.exec(code);
-
-      if (closeMatch) {
-        const stackIndex = stack.map(item => item.name).lastIndexOf(name);
-        if (stackIndex !== -1) stack.splice(stackIndex, 1);
-        token.lastIndex = closePattern.lastIndex;
-        lastEnd = token.lastIndex;
-      } else {
-        report(match.index, "Missing closing </" + name + ">.");
-        stack.pop();
-        token.lastIndex = code.length;
-        lastEnd = code.length;
-        break;
-      }
-    }
-  }
-
-  const tail = code.slice(lastEnd);
-  const danglingTail = tail.indexOf("<");
-  if (danglingTail !== -1) {
-    report(lastEnd + danglingTail, "Possible incomplete tag near the end of the code.");
-  }
-
-  stack.reverse().forEach(item => {
-    if (!optionalClose.has(item.name)) {
-      report(item.position, "Missing closing tag </" + item.name + ">.");
-    }
-  });
-
-  // Check unmatched quotes in the source. This is a lightweight
-  // check, not a full HTML tokenizer.
-  const quoteErrors = [];
-  const lines = source.split("\n");
-
-  lines.forEach((line, index) => {
-    if (/^\s*\/\//.test(line)) return;
-    const tagParts = line.match(/<[^>]*$/);
-    if (tagParts && !/^\s*<!/.test(tagParts[0])) {
-      quoteErrors.push("Line " + (index+1) + ": A tag may be missing its closing >.");
-    }
-  });
-
-  return [...new Set(errors.concat(quoteErrors))];
-}
-
-function updateEditor() {
-  const editor = document.getElementById("code");
-  const frame = document.getElementById("pv");
-  const box = document.getElementById("syntax");
-  if (!editor || !frame || !box) return;
-
-  const source = editor.value;
-  frame.srcdoc = source;
-
-  if (!source.trim()) {
-    box.className = "syntax-box";
-    box.textContent = "Start typing to check your HTML.";
-    return;
-  }
-
-  const errors = checkHTMLSyntax(source);
-
-  box.replaceChildren();
-  const title = document.createElement("div");
-  title.className = "syntax-title";
-
-  if (errors.length === 0) {
-    box.className = "syntax-box good";
-    title.className += " syntax-good";
-    title.textContent = "✓ No common tag-nesting errors detected.";
-    box.appendChild(title);
-
-    const note = document.createElement("div");
-    note.className = "syntax-note";
-    note.textContent = "This is a basic syntax check. It does not guarantee that every HTML rule or attribute is valid.";
-    box.appendChild(note);
-  } else {
-    box.className = "syntax-box bad";
-    title.className += " syntax-bad";
-    title.textContent = "✕ Found " + errors.length + " possible issue(s)";
-    box.appendChild(title);
-
-    const list = document.createElement("ul");
-    errors.forEach(error => {
-      const item = document.createElement("li");
-      item.textContent = error;
-      list.appendChild(item);
-    });
-    box.appendChild(list);
-  }
-}
-
-function check() {
-  const step = L[li].s[si];
-  const editor = document.getElementById("code");
-  const source = editor.value;
-
-  if (!source.trim()) {
-    showMessage("Write some HTML first, then check your work.", 0);
-    editor.focus();
-    return;
-  }
-
-  updateEditor();
-
-  const syntaxErrors = checkHTMLSyntax(source);
-  const doc = new DOMParser().parseFromString(source, "text/html");
-
-  const output = step.k.map(([label, fn]) => {
-    let ok = false;
-    try { ok = !!fn(doc, source); } catch (e) { ok = false; }
-    return [label, ok];
-  });
-
-  const results = document.getElementById("res");
-  results.replaceChildren();
-
-  output.forEach(([label, ok]) => {
-    const item = document.createElement("li");
-    item.className = ok ? "y" : "n";
-    item.textContent = (ok ? "✓ " : "✕ ") + label;
-    results.appendChild(item);
-  });
-
-  const passed = output.filter(item => item[1]).length;
-  const totalChecks = output.length;
-
-  if (passed === totalChecks && syntaxErrors.length === 0) {
-    showMessage("Excellent! All " + totalChecks + " exercise checks passed, with no common tag errors detected.", 1);
-    pass();
-  } else if (passed === totalChecks) {
-    showMessage("All exercise requirements passed, but the syntax checker still reports possible issues. Review them before continuing.", 0);
-    tries++;
-  } else {
-    tries++;
-    showMessage(passed + "/" + totalChecks + " exercise checks passed. Fix the marked items and try again.", 0);
-  }
-
-  if (tries >= 2 && passed < totalChecks) {
-    const ex = document.getElementById("ex");
-    ex.replaceChildren();
-
-    const sampleBtn = document.createElement("button");
-    sampleBtn.type = "button";
-    sampleBtn.className = "btn btn-outline";
-    sampleBtn.textContent = "Show sample answer";
-    sampleBtn.addEventListener("click", () => {
-      const answer = document.createElement("pre");
-      answer.className = "ans";
-      answer.textContent = step.a;
-      ex.replaceChildren(answer);
-    });
-    ex.appendChild(sampleBtn);
-  }
-}
-
-function next() {
-  if (si < L[li].s.length - 1) {
-    si++;
-  } else if (li < L.length - 1) {
-    li++;
-    si = 0;
-  } else {
-    showMessage("Congratulations! You have reached the end of the workbook.", 1);
-    return;
-  }
-
-  draw();
-  document.getElementById("learning").scrollIntoView({behavior:"smooth",block:"start"});
-}
-
-function prev() {
-  if (si > 0) {
-    si--;
-  } else if (li > 0) {
-    li--;
-    si = L[li].s.length - 1;
-  } else {
-    document.getElementById("learning").scrollIntoView({behavior:"smooth",block:"start"});
-    return;
-  }
-
-  draw();
-  document.getElementById("learning").scrollIntoView({behavior:"smooth",block:"start"});
-}
-
-document.getElementById("startBtn").addEventListener("click", () => {
-  document.getElementById("learning").scrollIntoView({behavior:"smooth",block:"start"});
-});
-
-document.getElementById("teamBtn").addEventListener("click", () => {
-  document.getElementById("team").scrollIntoView({behavior:"smooth",block:"start"});
-});
-
-document.getElementById("reset").addEventListener("click", () => {
-  if (!confirm("Reset all saved workbook progress? This cannot be undone.")) return;
-  P = {};
-  save();
-  li = 0;
-  si = 0;
-  draw();
-});
-
-const themeBtn = document.getElementById("themeBtn");
-let savedTheme = "light";
-try { savedTheme = localStorage.getItem("htmlwb-theme") || "light"; }
-catch (e) {}
-
-document.documentElement.dataset.theme = savedTheme;
-
-themeBtn.addEventListener("click", () => {
-  const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-  document.documentElement.dataset.theme = nextTheme;
-  try { localStorage.setItem("htmlwb-theme", nextTheme); }
-  catch (e) {}
-});
-
+let P={};try{P=JSON.parse(localStorage.getItem('htmlwb')||'{}')}catch(e){P={}}
+let li=0,si=0,tries=0;
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const fmt=s=>esc(s).replace(/`([^`]+)`/g,'<code>$1</code>');
+const total=L.reduce((a,l)=>a+l.s.length,0),$=id=>document.getElementById(id);
+function checkHTMLSyntax(){return[]}
+function save(){try{localStorage.setItem('htmlwb',JSON.stringify(P))}catch(e){}}
+function started(){let s=0;try{s=Object.keys(JSON.parse(localStorage.getItem('htmlwb-seen')||'{}')).length}catch(e){}return s>0||Object.keys(P).length>0}
+function updateProgress(){const d=Object.keys(P).filter(k=>P[k]).length,p=Math.round(d/total*100),st=started();
+ $('pb').parentElement.classList.toggle('hidden',!st);$('pb').style.width=p+'%';
+ $('pt').textContent=st?d+' of '+total+' steps complete':'Progress tracking starts when you begin practising';
+ $('percent').textContent=st?p+'%':'';$('statSteps').textContent=st?d:'–';$('statLessons').textContent=L.length}
+function renderPills(){$('pills').innerHTML=L.map((l,i)=>`<button type="button" class="${i===li?'on ':''}${l.s.every((_,j)=>!!P[key(i,j)])?'done':''}" data-i="${i}">${i+1}. ${esc(l.t)}</button>`).join('');
+ document.querySelectorAll('#pills button').forEach(b=>b.addEventListener('click',()=>{li=+b.dataset.i;si=0;draw()}))}
+function showMessage(t,ok){const e=$('msg');if(!e)return;e.textContent=t;e.style.color=ok===1?'var(--green)':ok===0?'var(--red)':'var(--muted)'}
+function pass(){P[key(li,si)]=1;save();updateProgress();renderPills();const x=$('next');if(x)x.disabled=false}
+function draw(){tries=0;renderPills();updateProgress();
+ const l=L[li],s=l.s[si],done=!!P[key(li,si)];
+ let h=`<div class="lesson-meta"><span class="badge accent">LESSON ${li+1} OF ${L.length}</span><span class="badge">STEP ${si+1} OF ${l.s.length}</span>${done?'<span class="badge">✓ Completed</span>':''}</div><h2 class="lesson-title">${esc(l.t)}</h2><p class="lesson-description">${fmt(l.i)}</p><div class="exercise"><h3>${s.q?'Knowledge check':'Your coding challenge'}</h3>`;
+ if(s.q)h+=`<p class="exercise-prompt">${fmt(s.q)}</p>`+s.o.map((o,i)=>`<button type="button" class="quiz-option" data-option="${i}">${esc(o)}</button>`).join('')+'<div class="msg" id="msg" aria-live="polite"></div>';
+ else h+=`<p class="exercise-prompt">${fmt(s.p)}</p><div class="editor-label"><label for="code">HTML CODE EDITOR</label><span>Tab completes tags · Live preview</span></div><textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="Type your HTML code here" placeholder="Write your HTML here...">${esc(s.x||'')}</textarea><div id="syntax" class="syntax-box" aria-live="polite">Start typing to check your HTML.</div><div class="btns"><button type="button" class="btn btn-primary" id="chk">Check my code</button><button type="button" class="btn btn-outline" id="hint">Show hint</button><button type="button" class="btn btn-soft" id="clear">Clear editor</button></div><div id="hintBox" class="hint-box hidden"></div><div class="msg" id="msg" aria-live="polite"></div><ul class="res" id="res"></ul><div id="ex"></div><div class="preview-wrap"><div class="preview-head"><span>LIVE PREVIEW</span><span>Sandboxed</span></div><iframe id="pv" title="Your HTML preview" sandbox></iframe></div>`;
+ h+=`</div><div class="exercise-nav"><button type="button" class="btn btn-outline" id="prev">← Previous</button><span class="badge">${done?'Completed':'Keep practising'}</span><button type="button" class="btn btn-primary" id="next" ${done?'':'disabled'}>Next step →</button></div>`;
+ $('main').innerHTML=h;$('prev').addEventListener('click',prev);$('next').addEventListener('click',next);
+ if(s.q)document.querySelectorAll('.quiz-option').forEach(b=>b.addEventListener('click',()=>{if(+b.dataset.option===s.c){document.querySelectorAll('.quiz-option').forEach(x=>x.disabled=true);b.classList.add('right');pass();showMessage('✓ Correct! '+s.w,1)}else{b.classList.add('wrong');b.disabled=true;showMessage('Not quite. Try another answer.',0)}}));
+ else{const ed=$('code');ed.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();ed.setRangeText('  ',ed.selectionStart,ed.selectionEnd,'end');ed.dispatchEvent(new Event('input'))}});
+  ed.addEventListener('input',updateEditor);$('chk').addEventListener('click',check);
+  $('hint').addEventListener('click',()=>{const b=$('hintBox');b.textContent='Hint: '+s.h;b.classList.toggle('hidden')});
+  $('clear').addEventListener('click',()=>{ed.value='';ed.dispatchEvent(new Event('input'));ed.focus()});updateEditor()}}
+function updateEditor(){const ed=$('code'),fr=$('pv'),box=$('syntax');if(!ed||!fr||!box)return;const src=ed.value;fr.srcdoc=src;
+ if(!src.trim()){box.className='syntax-box';box.textContent='Start typing to check your HTML.';return}
+ const er=checkHTMLSyntax(src);box.replaceChildren();const t=document.createElement('div');t.className='syntax-title';
+ if(!er.length){box.className='syntax-box good';t.className+=' syntax-good';t.textContent='✓ No tag or syntax errors detected.';box.appendChild(t);const nn=document.createElement('div');nn.className='syntax-note';nn.textContent='This is an educational checker. It catches common mistakes, not every HTML rule.';box.appendChild(nn)}
+ else{box.className='syntax-box bad';t.className+=' syntax-bad';t.textContent='✕ Found '+er.length+' issue(s)';box.appendChild(t);const u=document.createElement('ul');er.forEach(x=>{const i=document.createElement('li');i.textContent=x;u.appendChild(i)});box.appendChild(u)}}
+function check(){const s=L[li].s[si],ed=$('code'),src=ed.value;if(!src.trim()){showMessage('Write some HTML first, then check your work.',0);ed.focus();return}
+ updateEditor();const se=checkHTMLSyntax(src),doc=new DOMParser().parseFromString(src,'text/html');
+ const out=s.k.map(([lab,fn])=>{let ok=false;try{ok=!!fn(doc,src)}catch(e){}return[lab,ok]});
+ const r=$('res');r.replaceChildren();out.forEach(([lab,ok])=>{const i=document.createElement('li');i.className=ok?'y':'n';i.textContent=(ok?'✓ ':'✕ ')+lab;r.appendChild(i)});
+ const p=out.filter(o=>o[1]).length,t=out.length;
+ if(p===t&&!se.length){showMessage('Excellent! All '+t+' checks passed, with no syntax errors detected.',1);pass()}
+ else if(p===t){showMessage('All requirements passed, but the syntax checker still reports issues. Fix them to continue.',0);tries++}
+ else{tries++;showMessage(p+'/'+t+' checks passed. Fix the marked items and try again.',0)}
+ if(tries>=2&&p<t){const ex=$('ex');ex.replaceChildren();const b=document.createElement('button');b.type='button';b.className='btn btn-outline';b.textContent='Show sample answer';
+  b.addEventListener('click',()=>{const a=document.createElement('pre');a.className='ans';a.textContent=s.a;ex.replaceChildren(a)});ex.appendChild(b)}}
+const go=()=>$('learning').scrollIntoView({behavior:'smooth',block:'start'});
+function next(){if(si<L[li].s.length-1)si++;else if(li<L.length-1){li++;si=0}else{showMessage('Congratulations! You have reached the end of the workbook.',1);return}draw();go()}
+function prev(){if(si>0)si--;else if(li>0){li--;si=L[li].s.length-1}else{go();return}draw();go()}
+$('startBtn').addEventListener('click',go);$('teamBtn').addEventListener('click',()=>$('team').scrollIntoView({behavior:'smooth',block:'start'}));
+$('reset').addEventListener('click',()=>{if(!confirm('Reset all saved workbook progress? This cannot be undone.'))return;P={};save();try{localStorage.removeItem('htmlwb-seen');localStorage.removeItem('htmlwb-stages')}catch(e){}location.reload()});
+let th='light';try{th=localStorage.getItem('htmlwb-theme')||'light'}catch(e){}
+document.documentElement.dataset.theme=th;
+$('themeBtn').addEventListener('click',()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('htmlwb-theme',t)}catch(e){}});
 draw();
+
+</script>
+<script>
+(()=>{
+const VOID=new Set('area base br col embed hr img input link meta param source track wbr'.split(' '));
+const KNOWN=new Set('html head body title meta link style script base h1 h2 h3 h4 h5 h6 p br hr a img ul ol li dl dt dd table thead tbody tfoot tr th td caption colgroup col form label input button select option optgroup textarea fieldset legend header nav main section article aside footer div span strong em b i u small mark code pre blockquote cite q abbr time address figure figcaption video audio source track iframe canvas svg picture details summary sub sup del ins s kbd samp var wbr noscript template datalist output progress meter embed object param map area'.split(' '));
+const BLOCK=new Set('div p ul ol dl table form h1 h2 h3 h4 h5 h6 header footer main nav section article aside blockquote pre hr figure'.split(' '));
+const lev=(a,b)=>{const m=[...Array(a.length+1)].map((_,i)=>[i]);for(let j=1;j<=b.length;j++)m[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)m[i][j]=Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return m[a.length][b.length]};
+const near=w=>{let best=null,bd=3;for(const k of KNOWN){const d=lev(w,k);if(d<bd){bd=d;best=k}}return best};
+function lint(src){
+ const E=[],st=[],unk=new Set(),ls=[0];for(let k=0;k<src.length;k++)if(src[k]==='\n')ls.push(k+1);
+ const ln=p=>{let a=0,b=ls.length-1;while(a<b){const m=(a+b+1)>>1;if(ls[m]<=p)a=m;else b=m-1}return a+1};
+ const add=(p,msg,sev)=>E.push({line:ln(p),msg,sev:sev||'error',pos:p});
+ let i=0;
+ while(i<src.length){
+  const lt=src.indexOf('<',i);if(lt<0)break;i=lt;
+  if(src.startsWith('<!--',i)){const e=src.indexOf('-->',i+4);if(e<0){add(i,'This comment is never closed. End it with -->');break}i=e+3;continue}
+  if(src.startsWith('<!',i)){const e=src.indexOf('>',i);if(e<0){add(i,'Missing > at the end of this tag');break}
+   const t=src.slice(i,e+1);if(/^<!doctype/i.test(t)&&!/^<!doctype html>$/i.test(t))add(i,'Write the doctype exactly as <!DOCTYPE html>');i=e+1;continue}
+  const cm=/^<\/([A-Za-z][\w-]*)\s*(>?)/.exec(src.slice(i,i+100));
+  if(cm){const name=cm[1].toLowerCase();
+   if(!cm[2])add(i,'The closing tag </'+cm[1]+' is missing its >');
+   if(unk.has(name)){i+=cm[0].length;continue}
+   if(VOID.has(name))add(i,'<'+name+'> has no closing tag. Remove </'+name+'>');
+   else{let x=-1;for(let k=st.length-1;k>=0;k--)if(st[k].n===name){x=k;break}
+    if(x<0)add(i,'Stray </'+name+'>: there is no matching <'+name+'> open');
+    else{for(let k=st.length-1;k>x;k--)add(st[k].pos,'<'+st[k].n+'> is never closed before </'+name+'>');st.length=x}}
+   i+=cm[0].length;continue}
+  const m=/^<([A-Za-z][\w-]*)/.exec(src.slice(i,i+100));
+  if(!m){add(i,'A lone < in the text. Write &lt; if you mean the symbol','warning');i++;continue}
+  const raw=m[1],name=raw.toLowerCase();let j=i+m[0].length,self=false,closed=false,attrs={},bad=false;
+  while(j<src.length){
+   while(j<src.length&&/\s/.test(src[j]))j++;
+   if(src[j]==='>'){closed=true;j++;break}
+   if(src.startsWith('/>',j)){self=closed=true;j+=2;break}
+   if(j>=src.length||src[j]==='<')break;
+   const am=/^[^\s=>\/"'<]+/.exec(src.slice(j,j+100));
+   if(!am){if(src[j]==='"'||src[j]==="'")add(j,'Unexpected quote inside <'+name+'>');j++;continue}
+   const an=am[0].toLowerCase();j+=am[0].length;
+   if(an in attrs)add(j,'The attribute "'+an+'" is repeated in <'+name+'>');
+   attrs[an]=1;
+   let k=j;while(k<src.length&&/\s/.test(src[k]))k++;
+   if(src[k]==='='){j=k+1;while(j<src.length&&/\s/.test(src[j]))j++;
+    const q=src[j];
+    if(q==='"'||q==="'"){const e=src.indexOf(q,j+1);
+     if(e<0){add(j,'The quote after '+an+'= is never closed');j=src.length;bad=true;break}
+     j=e+1;if(j<src.length&&!/[\s>\/]/.test(src[j]))add(j,'Put a space between attributes in <'+name+'>')}
+    else{const vm=/^[^\s>]*/.exec(src.slice(j,j+300))[0];if(!vm)add(j,'The attribute '+an+'= has no value');else add(j,'Put quotes around the value of '+an+': '+an+'="'+vm.replace(/\/$/,'')+'"','warning');j+=vm.length}}
+  }
+  if(!closed&&!bad)add(i,'<'+raw+' is missing its closing >');
+  if(!closed){i=Math.max(j,i+1);continue}
+  if(raw!==name)add(i,'Write tags in lowercase: <'+name+'>','warning');
+  if(!KNOWN.has(name)){const s=near(name);add(i,'<'+name+'> is not an HTML tag.'+(s?' Did you mean <'+s+'>?':''));unk.add(name);i=j;continue}
+  const par=st.length?st[st.length-1].n:'';
+  if(name==='img'){if(!('src' in attrs))add(i,'<img> needs a src (the picture file)');if(!('alt' in attrs))add(i,'<img> needs alt text describing the picture')}
+  if(name==='a'&&!('href' in attrs))add(i,'<a> needs an href to work as a link','warning');
+  if(name==='li'&&!/^(ul|ol|menu)$/.test(par))add(i,'<li> must sit directly inside <ul> or <ol>');
+  else if(/^(ul|ol)$/.test(par)&&name!=='li'&&name!=='script')add(i,'Only <li> can sit directly inside <'+par+'>, not <'+name+'>');
+  if(name==='tr'&&!/^(table|thead|tbody|tfoot)$/.test(par))add(i,'<tr> must sit inside <table>');
+  if((name==='td'||name==='th')&&par!=='tr')add(i,'<'+name+'> must sit inside a <tr>');
+  if(par==='p'&&BLOCK.has(name))add(i,'<'+name+'> cannot go inside <p>. Close the paragraph first');
+  if(self&&!VOID.has(name))add(i,'<'+name+' /> does not self-close in HTML. Write <'+name+'></'+name+'>','warning');
+  if(!VOID.has(name)&&!self)st.push({n:name,pos:i});
+  if(name==='script'||name==='style'){const e=src.toLowerCase().indexOf('</'+name,j);if(e<0){add(i,'<'+name+'> is never closed');i=src.length;break}i=e;continue}
+  i=j;
+ }
+ st.forEach(o=>add(o.pos,'<'+o.n+'> is never closed. Add </'+o.n+'>'));
+ if(/<html/i.test(src)&&!/<!doctype/i.test(src))E.push({line:1,msg:'Start the page with <!DOCTYPE html>',sev:'warning'});
+ return E.sort((a,b)=>a.line-b.line);
+}
+const SN={img:'<img src="" alt="">',a:'<a href=""></a>',ul:'<ul>\n  <li></li>\n</ul>',ol:'<ol>\n  <li></li>\n</ol>',table:'<table>\n  <tr>\n    <th></th>\n  </tr>\n</table>',form:'<form>\n  <label for=""></label>\n  <input type="text" id="" name="">\n</form>',input:'<input type="text" id="" name="">',label:'<label for=""></label>',button:'<button type="submit"></button>',html:'<!DOCTYPE html>\n<html lang="en">\n<head>\n  <title></title>\n</head>\n<body>\n  \n</body>\n</html>'};
+const INLINE=new Set('a b i em strong span code small mark br img sub sup u abbr q cite time label input button'.split(' '));
+const NT=[
+{p:'HTML is the skeleton of every web page. You wrap content in tags: an opening tag, the content, then a closing tag. Every page uses the same frame: `<!DOCTYPE html>` announces HTML5, `<head>` holds page information, and `<body>` holds everything visitors see.',c:'<!DOCTYPE html>\n<html lang="en">\n<head>\n  <title>My Page</title>\n</head>\n<body>\n  <h1>Hello, world!</h1>\n  <p>This is my first page.</p>\n</body>\n</html>',k:['Tags come in pairs: `<p>` opens, `</p>` closes.','Use one `<h1>` per page for the main heading.','The `<title>` appears on the browser tab, not on the page.']},
+{p:'Text tags tell the browser what your words mean, not just how they look. Use `<p>` for paragraphs, `<h1>` to `<h6>` for headings, `<strong>` for important text, `<em>` for emphasis and `<br>` for a line break.',c:'<h2>My Notes</h2>\n<p>HTML is <strong>important</strong> and <em>fun</em>.</p>\n<p>Line one<br>Line two</p>',k:['Headings go in order: h1, then h2, then h3.','`<br>` has no closing tag.','Prefer `<strong>` and `<em>` over `<b>` and `<i>` when the meaning matters.']},
+{p:'Links are what make the web a web. The `<a>` element needs an `href`, the destination. Add `target="_blank"` to open a new tab, or use `href="#id"` to jump to an element with the same id on the page.',c:'<a href="https://example.com" target="_blank">Visit Example</a>\n<br><br>\n<a href="#bottom">Jump to the bottom</a>\n<p style="margin-top:300px" id="bottom">You landed here!</p>',k:['No `href` means no link.','Link text should make sense alone: “Read the guide”, not “click here”.','The id after `#` must match exactly.']},
+{p:'`<img>` shows a picture. `src` is the file path and `alt` describes the picture for screen readers and for broken images. It has no closing tag. If the file sits next to your page, the path is just its name, like `1.png`.',c:'<img src="data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'90\'><rect width=\'300\' height=\'90\' fill=\'%23ff5010\'/></svg>" alt="An orange banner" width="300">',k:['Always write `alt` text.','`width` and `height` stop the page jumping while it loads.','Check spelling and capital letters in file names.']},
+{p:'Use `<ul>` for bulleted lists and `<ol>` for numbered lists. Every item goes inside its own `<li>`, and only `<li>` may sit directly inside a list.',c:'<h3>Shopping</h3>\n<ul>\n  <li>Rice</li>\n  <li>Beans</li>\n</ul>\n<h3>Steps</h3>\n<ol>\n  <li>Open the editor</li>\n  <li>Write HTML</li>\n</ol>',k:['Use `<ol>` when order matters.','Lists can be nested: put a list inside an `<li>`.','Never put `<p>` straight inside `<ul>`.']},
+{p:'A `<table>` is made of rows (`<tr>`). Header cells use `<th>` and normal cells use `<td>`. Tables are for data, never for page layout.',c:'<table border="1" cellpadding="6">\n  <tr><th>Name</th><th>Age</th></tr>\n  <tr><td>Amina</td><td>19</td></tr>\n  <tr><td>Ali</td><td>20</td></tr>\n</table>',k:['Every row has the same number of cells.','`<th>` makes headings clear to screen readers.','Rows go inside the table, cells go inside rows.']},
+{p:'Forms collect information. Each `<input>` should have a `<label>`: the label’s `for` must match the input’s `id`, so clicking the label focuses the field. `type` changes the kind of input, like text, email or password.',c:'<form>\n  <label for="n">Name</label><br>\n  <input type="text" id="n" name="name"><br>\n  <label for="e">Email</label><br>\n  <input type="email" id="e" name="email"><br>\n  <button type="submit">Send</button>\n</form>',k:['`for` and `id` must match.','`type="email"` gives free checking on phones.','A form needs a submit button.']},
+{p:'Semantic elements describe the role of each part of the page. `<header>` is the top, `<nav>` holds navigation links, `<main>` is the unique content, and `<footer>` is the bottom. They help screen readers, search engines and other developers.',c:'<header>\n  <nav><a href="#">Home</a> | <a href="#">About</a></nav>\n</header>\n<main>\n  <h1>Welcome</h1>\n  <p>Main content lives here.</p>\n</main>\n<footer>© 2026</footer>',k:['Use one `<main>` per page.','Prefer semantic tags over plain `<div>`.','They cost nothing and improve accessibility.']},
+{p:'Browsers quietly repair broken HTML, so mistakes can hide. Build the habit: close every tag, nest tags correctly (last opened, first closed), and read the checker’s messages under the editor. The example below has a nesting mistake. Try fixing it and watch the preview.',c:'<p>This is <strong>very <em>important</strong></em> text.</p>',k:['Last opened, first closed.','Fix the first error first: later errors often disappear.','Use the “Format code” button to see structure clearly.']},
+{p:'Time to combine everything. Plan first: list the parts (title, header, photo, hobbies, form, footer), then build them one by one, formatting and checking as you go. A tidy structure makes the page easy to read and fix.',c:'<header><h1>My Profile</h1></header>\n<main>\n  <h2>Hobbies</h2>\n  <ul>\n    <li>Reading</li>\n    <li>Coding</li>\n    <li>Football</li>\n  </ul>\n</main>\n<footer>© 2026</footer>',k:['Build in small pieces and check each one.','Use the tag suggestions: type `<` and a few letters, then Tab.','Press “Format code” before you submit.']}
+];
+function pretty(src){
+ const T=src.replace(/\r/g,'').match(/<!--[\s\S]*?-->|<[^>]+>|[^<]+/g)||[];let d=0;const o=[],ind=()=>'  '.repeat(Math.max(d,0));
+ const nm=t=>((/^<\/?([a-z][\w-]*)/i.exec(t)||[])[1]||'').toLowerCase();
+ for(let i=0;i<T.length;i++){const t=T[i];
+  if(!t.startsWith('<')){const x=t.trim().replace(/\s+/g,' ');if(x)o.push(ind()+x);continue}
+  if(/^<\//.test(t)){d--;o.push(ind()+t);continue}
+  const n2=nm(t),open=n2&&!VOID.has(n2)&&!/\/>$/.test(t)&&!/^<!/.test(t);
+  if(open){let j=i+1,dep=1,ok=true;
+   for(;j<T.length;j++){const u=T[j];if(u.startsWith('<')&&!u.startsWith('<!--')){const un=nm(u);if(un===n2){dep+=/^<\//.test(u)?-1:1;if(!dep)break}else if(!INLINE.has(un)&&!VOID.has(un)){ok=false;break}}}
+   if(ok&&j<T.length){o.push(ind()+T.slice(i,j+1).join('').replace(/\s+/g,' ').replace(/^(<[^>]+>)\s+/,'$1').replace(/\s+(<\/[^>]+>)$/,'$1'));i=j;continue}}
+  o.push(ind()+t);if(open)d++}
+ return o.join('\n')+'\n'}
+checkHTMLSyntax=src=>lint(src).filter(e=>e.sev==='error').map(e=>'Line '+e.line+': '+e.msg);
+const SEEN=(()=>{try{return JSON.parse(localStorage.getItem('htmlwb-seen')||'{}')}catch(e){return{}}})();
+const saveSeen=()=>{try{localStorage.setItem('htmlwb-seen',JSON.stringify(SEEN))}catch(e){}};
+const HTML5='<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>Document</title>\n</head>\n<body>\n  \n</body>\n</html>';
+const ECH=(s,c)=>{let d=0;for(let i=0;i<s.length;i++){const x=s[i];if(x==='['||x==='{')d++;else if(x===']'||x==='}')d--;else if(!d&&x===c)return i}return -1};
+const ESPLIT=s=>{const r=[];let d=0,b=0;for(let i=0;i<s.length;i++){const x=s[i];if(x==='['||x==='{')d++;else if(x===']'||x==='}')d--;else if(!d&&x==='+'){r.push(s.slice(b,i));b=i+1}}r.push(s.slice(b));return r};
+const EDEF={a:'href=""',img:'src="" alt=""',input:'type="text"',label:'for=""',link:'rel="stylesheet" href=""',form:'action=""',script:'src=""',meta:'name="" content=""',button:'type="submit"',textarea:'name="" rows="3"'};
+function egen(a,d,par){const out=[],pad='  '.repeat(d);
+ const gi=ECH(a,'>'),items=ESPLIT(gi<0?a:a.slice(0,gi));items.forEach((head,ix)=>{const rest=ix===items.length-1&&gi>=0?a.slice(gi+1):'';
+  const m=/^([a-z][a-z0-9]*)?((?:[.#][\w-]+)*)(?:\[([^\]]*)\])?(?:\{([^}]*)\})?(?:\*(\d+))?$/i.exec(head);if(!m)throw 0;
+  let tag=(m[1]||'').toLowerCase();if(!tag)tag=/^(ul|ol)$/.test(par)?'li':par==='table'?'tr':par==='tr'?'td':'div';
+  const A=new Map();for(const x of (EDEF[tag]||'').matchAll(/([\w-]+)="([^"]*)"/g))A.set(x[1],x[2]);
+  const id=/#([\w-]+)/.exec(m[2]),cl=[...m[2].matchAll(/\.([\w-]+)/g)].map(x=>x[1]);
+  if(id)A.set('id',id[1]);if(cl.length)A.set('class',cl.join(' '));
+  if(m[3])for(const x of m[3].matchAll(/([\w-]+)(?:=(?:"([^"]*)"|'([^']*)'|([^\s\]]*)))?/g))A.set(x[1],x[2]??x[3]??x[4]??'');
+  const at=[...A].map(([k,v])=>` ${k}="${v}"`).join(''),open='<'+tag+at+'>',txt=m[4]||'';
+  for(let c=0;c<(+m[5]||1);c++){const kids=rest?egen(rest,d+1,tag):[];
+   if(VOID.has(tag))out.push(pad+open);
+   else if(kids.length){out.push(pad+open);if(txt)out.push(pad+'  '+txt);out.push(...kids);out.push(pad+'</'+tag+'>')}
+   else out.push(pad+open+txt+'</'+tag+'>')}});
+ return out}
+function emmet(a){
+ if(a==='!'||a==='html:5')return HTML5;
+ if(!/^[\w.#>+*\[\]{}="'\-:\/!?,]+$/.test(a))return null;
+ const f=/^([a-z][a-z0-9]*)/i.exec(a);
+ if(f&&!KNOWN.has(f[1].toLowerCase()))return null;
+ if(!/[.#>+*\[{]/.test(a)&&!(f&&f[0]===a))return null;
+ try{return egen(a,0,'').join('\n')}catch(e){return null}}
+
+function editorTools(){
+ const ed=document.getElementById('code');if(!ed||ed.dataset.tools)return;ed.dataset.tools=1;
+ const w=document.createElement('div'),g=document.createElement('div'),chips=document.createElement('div'),fb=document.createElement('button');
+ w.className='edwrap';g.className='gut';chips.className='chips';fb.type='button';fb.className='btn btn-soft';fb.textContent='✨ Format code';
+ const win=document.createElement('div'),row=document.createElement('div');win.className='vswin';row.className='emrow';
+ win.innerHTML='<div class="vsbar"><span class="dots"><i class="r"></i><i class="y"></i><i class="g"></i></span><span class="vstitle">index.html — CodeX</span></div><div class="vstab"><span>&lt;/&gt; index.html</span></div>';
+ const bx=document.createElement('div'),hl=document.createElement('pre');bx.className='edbox';hl.className='hl';hl.setAttribute('aria-hidden','true');ed.before(win);bx.append(hl,ed);w.append(g,bx);win.append(w);win.insertAdjacentHTML('beforeend','<div class="vsstat"><span id="vsP">✕ 0</span><span id="vsL" class="sp">Ln 1, Col 1</span><span>Spaces: 2</span><span>UTF-8</span><span>HTML</span><span>⚡ Emmet</span></div>');
+ const pr=win.querySelector('#vsP'),ps=win.querySelector('#vsL'),pos=()=>{const t=ed.value.slice(0,ed.selectionStart).split('\n');ps.textContent='Ln '+t.length+', Col '+(t[t.length-1].length+1)};
+ row.innerHTML='<b>⚡ Emmet</b><span>type an abbreviation, then press Tab:</span>'+['!','ul>li*3','h1','p','a','img','div.card>h2+p','table>tr*2>td*2','form>label+input'].map(x=>`<button type="button" data-a="${x}">${esc(x)}</button>`).join('');
+ win.after(row);row.after(chips);document.getElementById('chk').after(fb);
+ const gut=()=>{const E2=lint(ed.value).filter(e=>e.sev==='error'),bad=new Set(E2.map(e=>e.line));pr.textContent='✕ '+E2.length;pos();hl.innerHTML=hlight(ed.value)+'\n';hl.scrollTop=ed.scrollTop;hl.scrollLeft=ed.scrollLeft;g.innerHTML=Array.from({length:ed.value.split('\n').length},(_,i)=>`<div class="${bad.has(i+1)?'bad':''}">${i+1}</div>`).join('');g.scrollTop=ed.scrollTop};
+ const fire=()=>ed.dispatchEvent(new Event('input')),cur=p=>{ed.selectionStart=ed.selectionEnd=p};
+ const part=()=>/<([a-z][a-z0-9]*)$/i.exec(ed.value.slice(0,ed.selectionStart));
+ const expand=()=>{const s=ed.selectionStart,v=ed.value,pre=v.slice(v.lastIndexOf('\n',s-1)+1,s),am=/([^\s<>][^\s<]*)$/.exec(pre);if(!am)return false;const out=emmet(am[1]);if(!out)return false;
+  const ind=/^[ \t]*/.exec(pre)[0],txt=out.split('\n').map((x,i)=>i?ind+x:x).join('\n'),st=s-am[1].length;let p=txt.length;const b=txt.indexOf('<body>\n');
+  if(b>=0)p=b+7+ind.length+2;else{const m=/""|><\//.exec(txt);if(m)p=m.index+1}
+  ed.value=v.slice(0,st)+txt+v.slice(s);cur(st+p);fire();return true};
+ row.onclick=e=>{const b=e.target.closest('button');if(!b)return;ed.focus();const s=ed.selectionStart,v=ed.value,pre=v.slice(v.lastIndexOf('\n',s-1)+1,s);ed.setRangeText((pre.trim()?'\n':'')+b.dataset.a,s,ed.selectionEnd,'end');expand()};
+ const sug=()=>{const m=part();if(!m){chips.innerHTML='';return}const p=m[1].toLowerCase(),l=[...new Set([...Object.keys(SN),...KNOWN])].filter(x=>x.startsWith(p)).slice(0,7);chips.innerHTML=l.length?'<span>Tab to complete:</span>'+l.map(x=>`<button type="button" data-t="${x}">&lt;${x}&gt;</button>`).join(''):''};
+ const snip=(t,st)=>{const s=SN[t]||(VOID.has(t)?`<${t}>`:`<${t}></${t}>`),m=/""|><\//.exec(s),v=ed.value,e=ed.selectionStart;ed.value=v.slice(0,st)+s+v.slice(e);cur(st+(m?m.index+1:s.length));fire();ed.focus()};
+ chips.onclick=e=>{const b=e.target.closest('button'),m=part();if(b&&m)snip(b.dataset.t,ed.selectionStart-m[0].length)};
+ ed.addEventListener('keydown',e=>{
+  if(e.ctrlKey||e.metaKey||e.altKey)return;const s=ed.selectionStart,v=ed.value,k=e.key;
+  if(k==='Tab'&&!e.shiftKey){const m=part();if(s!==ed.selectionEnd)return;
+   if(m){e.preventDefault();e.stopImmediatePropagation();snip(m[1].toLowerCase(),s-m[0].length);return}
+   if(expand()){e.preventDefault();e.stopImmediatePropagation();return}
+   if((v[s-1]==='"'&&v[s]==='"')||(v[s-1]==='>'&&v.slice(s,s+2)==='</')){const r=/""|><\//g;r.lastIndex=s+1;const mm=r.exec(v);if(mm){e.preventDefault();e.stopImmediatePropagation();cur(mm.index+1);sug();pos()}}
+   return}
+  if(s!==ed.selectionEnd)return;
+  if(k==='>'){const m=/<([a-z][\w-]*)(?:\s[^<>]*)?$/i.exec(v.slice(0,s));if(m&&!VOID.has(m[1].toLowerCase())){e.preventDefault();ed.setRangeText('></'+m[1]+'>',s,s,'end');cur(s+1);fire()}}
+  else if(k==='"'||k==="'"){if(v[s]===k){e.preventDefault();cur(s+1)}else if(v[s-1]==='='){e.preventDefault();ed.setRangeText(k+k,s,s,'end');cur(s+1);fire()}}
+  else if(k==='Enter'){const ls=v.lastIndexOf('\n',s-1)+1,ind=/^[ \t]*/.exec(v.slice(ls,s))[0],op=/<([a-z][\w-]*)(?:\s[^<>]*)?>\s*$/i.exec(v.slice(ls,s)),more=op&&!VOID.has(op[1].toLowerCase())?'  ':'';e.preventDefault();
+   if(more&&v.slice(s).startsWith('</')){ed.setRangeText('\n'+ind+more+'\n'+ind,s,s,'end');cur(s+1+ind.length+more.length)}else ed.setRangeText('\n'+ind+more,s,s,'end');fire()}
+ },true);
+ ed.addEventListener('input',()=>{gut();sug()});ed.addEventListener('scroll',()=>{g.scrollTop=ed.scrollTop;hl.scrollTop=ed.scrollTop;hl.scrollLeft=ed.scrollLeft});ed.addEventListener('click',()=>{sug();pos()});ed.addEventListener('keyup',pos);
+ fb.onclick=()=>{ed.value=pretty(ed.value);cur(ed.value.length);fire();ed.focus()};gut()}
+const hlight=s=>esc(s).replace(/(&lt;!--[\s\S]*?--&gt;)|(&lt;!doctype[\s\S]*?&gt;)|(&lt;\/?)([a-zA-Z][\w-]*)([\s\S]*?)(\/?&gt;)/gi,(m,c,d,o,n,at,e)=>c?'<span class="c">'+c+'</span>':d?'<span class="d">'+d+'</span>':'<span class="t">'+o+n+'</span>'+at.replace(/("[^"]*"|'[^']*')|([\w:-]+)/g,(x,q,w)=>q?'<span class="s">'+q+'</span>':'<span class="a">'+w+'</span>')+'<span class="t">'+e+'</span>');
+const PASS=60,SKEY='htmlwb-stages',STG=['t','s','p','a'],STN={t:['Teaching','Understand'],s:['Study','Review'],p:['Practice','Build'],a:['Assessment','Prove it']};
+const AN=[
+[['Where does the visible content of a page go?',['<head>','<body>','<title>','<meta>'],1,'The `<body>` holds everything visitors see.'],['Which line tells the browser the page is HTML5?',['<html5>','<!DOCTYPE html>','<doc html>','<?html?>'],1,'`<!DOCTYPE html>` goes at the very top.']],
+[['Which tag creates a line break?',['<lb>','<break>','<br>','<newline>'],2,'`<br>` is a void tag, so it has no closing tag.'],['What does `<em>` express?',['Importance','Emphasis','A heading','A quote'],1,'`<em>` stresses a word; `<strong>` shows importance.']],
+[['Which attribute holds a link’s destination?',['src','href','target','link'],1,'`href` is the destination of an `<a>`.'],['What does `target="_blank"` do?',['Opens the link in a new tab','Blanks the page','Downloads the file','Hides the link'],0,'It opens the destination in a new tab or window.'],['Which link jumps to an element with id="contact"?',['<a href="contact">','<a href="#contact">','<a id="#contact">','<a to="contact">'],1,'`#` followed by the id jumps within the page.']],
+[['Which attribute holds the picture file path?',['href','alt','src','path'],2,'`src` tells `<img>` which file to show.'],['How do you close an `<img>` tag?',['</img>','You don’t: it is a void element','<img/ end>','</image>'],1,'`<img>` has no closing tag.']],
+[['Which tag wraps a bulleted list?',['<ul>','<li>','<ol>','<bullet>'],0,'`<ul>` is an unordered (bulleted) list.'],['What may sit directly inside a `<ul>`?',['<p>','<li>','<div>','<h2>'],1,'Only `<li>` items belong directly inside a list.']],
+[['Which tag makes a table row?',['<td>','<tr>','<th>','<row>'],1,'`<tr>` is a table row.'],['Which tag is for a header cell?',['<th>','<td>','<head>','<hc>'],0,'`<th>` marks header cells.'],['What are tables for?',['Page layout','Rows and columns of data','Menus only','Images'],1,'Use tables for tabular data, not layout.']],
+[['How does a label connect to an input?',['for matches the input’s id','name matches type','They sit side by side','class matches id'],0,'`for` on the label must match `id` on the input.'],['Which type suits an email address?',['text','mail','email','address'],2,'`type="email"` gives built-in checking.'],['Does HTML alone store form data?',['Yes','No, you need a backend or service','Only with labels','Only with email inputs'],1,'HTML builds the form; saving needs extra processing.']],
+[['Which tag holds the main navigation links?',['<nav>','<main>','<aside>','<menu>'],0,'`<nav>` marks navigation.'],['How many `<main>` elements should a page have?',['One','Two','Any number','None'],0,'A page has one main content area.'],['Why use semantic tags?',['They describe meaning and help accessibility','They change colours','They make pages faster','They replace CSS'],0,'They tell browsers and assistive tech what each part is.']],
+[['How should nested tags be closed?',['Last opened, first closed','In any order','First opened, first closed','Never'],0,'Close the innermost tag first.'],['Which tag name is wrong?',['<img>','<image>','<p>','<ul>'],1,'The correct tag is `<img>`.'],['A page looks fine in the browser. Is its HTML valid?',['Always','Not necessarily: browsers repair mistakes','Only on phones','Only if it has CSS'],1,'Browsers quietly fix many errors, so check your code.']],
+[['Which element holds the page’s main content?',['<main>','<head>','<title>','<meta>'],0,'`<main>` wraps the central content.'],['What makes a form accessible?',['Labels linked to inputs','Bigger buttons','More colours','Images'],0,'Linked labels help everyone, especially screen-reader users.'],['Best element for a list of hobbies?',['<ul> with <li>','<table>','<form>','<footer>'],0,'Hobbies have no fixed order, so use a bulleted list.']]];
+const AQ=i=>[...L[i].s.filter(x=>x.q).map(x=>({q:x.q,o:x.o,c:x.c,w:x.w})),...AN[i].map(x=>({q:x[0],o:x[1],c:x[2],w:x[3]}))];
+const CHK=i=>['I can explain what “'+L[i].t+'” is about in my own words.','I can write the main tags from this lesson without looking.','I can spot a mistake in this kind of code.'];
+let SP={};try{SP=JSON.parse(localStorage.getItem(SKEY)||'{}')}catch(e){}
+const svS=()=>{try{localStorage.setItem(SKEY,JSON.stringify(SP))}catch(e){}};
+const sp=i=>SP[i]||(SP[i]={t:0,s:0,a:null,n:0});
+const pdone=i=>L[i].s.every((_,j)=>P[key(i,j)]);
+const sdone=(i,g)=>g==='t'?!!sp(i).t:g==='s'?!!sp(i).s:g==='p'?pdone(i):sp(i).a!==null&&sp(i).a>=PASS;
+const ldone=i=>STG.every(g=>sdone(i,g));
+const unl=i=>i===0||ldone(i-1);
+const sopen=(i,g)=>unl(i)&&STG.slice(0,STG.indexOf(g)).every(x=>sdone(i,x));
+const first=i=>STG.find(g=>!sdone(i,g))||'a';
+let stage='t',ans={};
+const toast=m=>{let t=document.getElementById('toast');if(!t){t=document.createElement('div');t.id='toast';t.className='toast';t.setAttribute('role','status');document.body.append(t)}t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),3200)};
+const CHEER=['Nice work!','Great job, keep going!','Well done, that was clean.','You’re getting the hang of this.'];
+const cheer=()=>CHEER[Math.floor(Math.random()*CHEER.length)];
+started=()=>Object.keys(SEEN).length>0||Object.keys(P).length>0;
+updateProgress=function(){const done=L.filter((_,i)=>ldone(i)).length,stg=L.reduce((a,_,i)=>a+STG.filter(g=>sdone(i,g)).length,0),pct=Math.round(stg/(L.length*4)*100),st=started();
+ $('pb').parentElement.classList.toggle('hidden',!st);$('pb').style.width=pct+'%';
+ $('pt').textContent=st?done+' of '+L.length+' lessons complete':'Progress tracking starts when you begin practising';$('percent').textContent=st?pct+'%':'';
+ const sc=L.map((_,i)=>sp(i).a).filter(x=>x!==null),av=sc.length?Math.round(sc.reduce((a,b)=>a+b,0)/sc.length)+'%':'–';
+ [done+'/'+L.length,L.filter((_,i)=>sp(i).t).length+'/'+L.length,L.filter((_,i)=>pdone(i)).length+'/'+L.length,av].forEach((x,i)=>{const e=$('st'+(i+1));if(e)e.textContent=x});
+ const hr=new Date().getHours(),g=hr<12?'Good morning':hr<17?'Good afternoon':'Good evening',e=$('hi');
+ if(e)e.textContent=g+'! '+(done===L.length?'You finished the whole workbook. Congratulations!':st?'You’re on lesson '+(li+1)+': '+L[li].t+'. One step at a time.':'Ready when you are. Start with lesson 1 and take it one step at a time.')};
+renderPills=function(){$('pills').innerHTML=L.map((l,i)=>{const u=unl(i),d=ldone(i),n=STG.filter(g=>sdone(i,g)).length;return`<button type="button" class="${i===li?'on ':''}${d?'done':''}" data-i="${i}" ${u?'':'disabled'}>${u?i+1:'🔒'}. ${esc(l.t)}<small>${d?'Completed':u?n+'/4 stages':'Finish lesson '+i+' to unlock'}</small></button>`}).join('');
+ document.querySelectorAll('#pills button').forEach(b=>b.addEventListener('click',()=>{li=+b.dataset.i;si=0;stage=first(li);draw();go()}))};
+const snav=()=>'<div class="sn">'+STG.map((g,k)=>`<button type="button" class="sb${g===stage?' on':''}${sdone(li,g)?' ok':''}" data-g="${g}" ${sopen(li,g)?'':'disabled'}><b>${sdone(li,g)?'✓':k+1}</b><span>${STN[g][0]}<small>${STN[g][1]}</small></span></button>`).join('')+'</div>';
+const bindSn=()=>document.querySelectorAll('.sb').forEach(b=>b.onclick=()=>{stage=b.dataset.g;draw()});
+const refreshNav=()=>{const n=document.querySelector('.sn');if(n){n.outerHTML=snav();bindSn()}renderPills();updateProgress()};
+const head=()=>`<div class="lesson-meta"><span class="badge accent">LESSON ${li+1} OF ${L.length}</span>${ldone(li)?'<span class="badge">✓ Completed</span>':''}</div><h2 class="lesson-title">${esc(L[li].t)}</h2><p class="lesson-description">${fmt(L[li].i)}</p>`;
+const baseDraw=draw;
+draw=function(){
+ if(!sopen(li,stage))stage=first(li);
+ if(stage==='p'){baseDraw();SEEN[li]=1;saveSeen();const d=$('main').querySelector('.lesson-description');if(d){d.insertAdjacentHTML('afterend',snav());bindSn()}editorTools();reqBox();updateProgress();return}
+ renderPills();updateProgress();const nt=NT[li],s=sp(li);let h=head()+snav()+'<div class="pan">';
+ if(stage==='t')h+=`<h3>Before you code</h3><p>${fmt(nt.p)}</p><h4>Example · edit it and watch the live result</h4><div class="live"><textarea spellcheck="false" aria-label="Editable example">${esc(nt.c)}</textarea><iframe sandbox title="Live example"></iframe></div><h4>Remember</h4><ul>${nt.k.map(x=>`<li>${fmt(x)}</li>`).join('')}</ul><div class="foot2"><span>${s.t?'Teaching completed ✓':'Read, then try changing the example.'}</span><button class="btn btn-primary" id="gT" type="button">${s.t?'Continue →':'I’ve understood this →'}</button></div>`;
+ else if(stage==='s')h+=`<h3>Study the key ideas</h3><div class="cg">${nt.k.map((x,i)=>`<div class="cc"><b>Key idea ${i+1}</b>${fmt(x)}</div>`).join('')}</div><h4>Check your understanding</h4><p>Tick each statement when you could explain it to a friend.</p>${CHK(li).map(x=>`<label class="ck"><input type="checkbox" ${s.s?'checked':''}><span>${esc(x)}</span></label>`).join('')}<div class="foot2"><span id="cs">${s.s?'Study completed ✓':'Tick all three to continue.'}</span><button class="btn btn-primary" id="gS" type="button" ${s.s?'':'disabled'}>${s.s?'Continue →':'Start practising →'}</button></div>`;
+ else{const q=AQ(li);h+=`<h3>Assessment</h3><p>Answer every question. You need at least ${PASS}% to pass${s.a!==null?' · best so far: '+s.a+'%':''}. If you miss one, read the explanation and try again.</p>${q.map((x,i)=>`<section class="qc"><div class="qn">Question ${i+1} of ${q.length}</div><h5>${fmt(x.q)}</h5>${x.o.map((o,k)=>`<label class="ao"><input type="radio" name="q${i}" value="${k}"><span>${esc(o)}</span></label>`).join('')}<div class="af" id="af${i}"></div></section>`).join('')}<div class="foot2"><span>${s.n} attempt${s.n===1?'':'s'} so far</span><button class="btn btn-primary" id="gA" type="button">Check answers</button></div><div id="rs"></div>`}
+ $('main').innerHTML=h+'</div>';bindSn();
+ const nt2=NT[li],le=document.querySelector('.live textarea');if(le){const fr=document.querySelector('.live iframe'),run=()=>{fr.srcdoc=le.value};le.addEventListener('input',run);run()}
+ if(stage==='t')$('gT').onclick=()=>{if(!s.t){s.t=1;svS();toast('Teaching done. '+cheer())}stage='s';draw();go()};
+ if(stage==='s'){const bx=[...document.querySelectorAll('.ck input')],g=$('gS');bx.forEach(b=>b.onchange=()=>{g.disabled=!bx.every(x=>x.checked)||false;$('cs').textContent=bx.filter(x=>x.checked).length+' of 3 ticked'});if(s.s)g.disabled=false;g.onclick=()=>{if(!s.s){s.s=1;svS();toast('Study complete. Time to build something!')}stage='p';draw();go()}}
+ if(stage==='a')$('gA').onclick=()=>{const q=AQ(li);let ok=0;
+  if(q.some((_,i)=>!document.querySelector('input[name=q'+i+']:checked'))){toast('Please answer every question first.');return}
+  q.forEach((x,i)=>{const v=+document.querySelector('input[name=q'+i+']:checked').value,r=v===x.c;if(r)ok++;const f=$('af'+i);f.className='af show '+(r?'y':'n');f.innerHTML=r?'✓ Correct. '+fmt(x.w):'✕ Not quite. The answer is “'+esc(x.o[x.c])+'”. '+fmt(x.w);document.querySelectorAll('input[name=q'+i+']').forEach(e=>e.disabled=true)});
+  const sc=Math.round(ok/q.length*100),pass=sc>=PASS;s.n++;s.a=Math.max(s.a===null?0:s.a,sc);svS();$('gA').disabled=true;refreshNav();
+  const nx=li<L.length-1;$('rs').innerHTML=`<div class="rc ${pass?'pass':'fail'}"><div class="big">${sc}%</div><p><b>${pass?'You passed! '+cheer():'Not there yet, and that’s okay.'}</b> You got ${ok} of ${q.length} right.${pass?(ldone(li)?(nx?' Lesson '+(li+2)+' is now unlocked.':' You have finished the workbook!'):' Finish the remaining stages to complete this lesson.'):' Read the explanations, then try again.'}</p><div class="btns">${pass?(nx&&ldone(li)?'<button class="btn btn-primary" id="gN" type="button">Next lesson →</button>':''):'<button class="btn btn-primary" id="gR" type="button">Try again</button>'}</div></div>`;
+  if(pass)toast(ldone(li)?'Lesson complete! 🎉':'Assessment passed.');
+  const gn=$('gN');if(gn)gn.onclick=()=>{li++;si=0;stage=first(li);draw();go()};const gr=$('gR');if(gr)gr.onclick=()=>draw()}};
+const reqBox=()=>{const s=L[li].s[si],ed=$('code'),p=document.querySelector('.exercise-prompt');if(!s||!s.k||!ed||!p)return;
+ const box=document.createElement('div');box.className='reqbox';box.innerHTML='<b>Your code should include</b><ul>'+s.k.map(k=>`<li><span>○</span>${esc(k[0])}</li>`).join('')+'</ul>';p.after(box);
+ const tick=()=>{const d=new DOMParser().parseFromString(ed.value,'text/html');box.querySelectorAll('li').forEach((li2,i)=>{let ok=false;try{ok=!!s.k[i][1](d,ed.value)}catch(e){}li2.className=ok?'ok':'';li2.firstChild.textContent=ok?'✓':'○'})};
+ ed.addEventListener('input',tick);tick()};
+next=function(){const l=L[li];if(si<l.s.length-1)si++;else if(pdone(li)){stage='a';toast('Practice complete! Now prove it in the assessment.')}draw();go()};
+prev=function(){if(si>0)si--;else stage='s';draw();go()};
+const bp=pass;pass=function(){bp();refreshNav();if(pdone(li))toast('All practice steps done. '+cheer())};
+document.getElementById('repBtn').onclick=()=>{const rows=L.map((l,i)=>`<tr><td>${i+1}. ${esc(l.t)}</td><td>${sdone(i,'t')?'✓':'–'}</td><td>${sdone(i,'s')?'✓':'–'}</td><td>${L[i].s.filter((_,j)=>P[key(i,j)]).length}/${L[i].s.length}</td><td>${sp(i).a===null?'–':sp(i).a+'%'}</td><td>${ldone(i)?'Complete':unl(i)?'In progress':'Locked'}</td></tr>`).join('');
+ $('main').innerHTML=`<div class="pan"><h3>My progress</h3><p>Here is how your learning is going. Everything is saved in this browser.</p><div style="overflow-x:auto"><table class="rep"><thead><tr><th>Lesson</th><th>Teaching</th><th>Study</th><th>Practice</th><th>Best score</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table></div><div class="foot2"><span>Pass mark: ${PASS}%</span><button class="btn btn-primary" id="bk" type="button">Back to my lesson</button></div></div>`;$('bk').onclick=()=>{draw()};go()};
+stage=first(li);
+const tc=document.querySelector('meta[name="theme-color"]');if(tc)tc.content='#0b0b0c';
+draw();
+})();
+
 </script>
 </body>
 </html>
