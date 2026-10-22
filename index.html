@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b0b0c">
 <meta name="description" content="An interactive HTML practice workbook for learning, writing, debugging and mastering HTML.">
-<title>HTML Practice Workbook</title>
+<title>HTML Practice Workbook | SAM</title>
 <link rel="icon" href="1.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -228,7 +228,7 @@ code{background:rgba(255,80,16,.12);color:var(--ink)}
   <main id="main" class="lesson-card" aria-live="polite"></main>
  </div>
 </section>
-<footer class="foot"><p>HTML Practice Workbook · Prepared by CodeX</p><p>Your progress is saved locally in this browser.</p><button class="btn btn-outline" id="reset" type="button">Reset learning progress</button></footer>
+<footer class="foot"><p>HTML Practice Workbook · Prepared by SAM</p><p>Your progress is saved locally in this browser.</p><button class="btn btn-outline" id="reset" type="button">Reset learning progress</button></footer>
 </div>
 
 <script>
@@ -275,7 +275,7 @@ function started(){let s=0;try{s=Object.keys(JSON.parse(localStorage.getItem('ht
 function updateProgress(){const d=Object.keys(P).filter(k=>P[k]).length,p=Math.round(d/total*100),st=started();
  $('pb').parentElement.classList.toggle('hidden',!st);$('pb').style.width=p+'%';
  $('pt').textContent=st?d+' of '+total+' steps complete':'Progress tracking starts when you begin practising';
- $('percent').textContent=st?p+'%':'';$('statSteps').textContent=st?d:'–';$('statLessons').textContent=L.length}
+ $('percent').textContent=st?p+'%':'';}
 function renderPills(){$('pills').innerHTML=L.map((l,i)=>`<button type="button" class="${i===li?'on ':''}${l.s.every((_,j)=>!!P[key(i,j)])?'done':''}" data-i="${i}">${i+1}. ${esc(l.t)}</button>`).join('');
  document.querySelectorAll('#pills button').forEach(b=>b.addEventListener('click',()=>{li=+b.dataset.i;si=0;draw()}))}
 function showMessage(t,ok){const e=$('msg');if(!e)return;e.textContent=t;e.style.color=ok===1?'var(--green)':ok===0?'var(--red)':'var(--muted)'}
